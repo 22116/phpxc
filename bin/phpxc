@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use LSBProject\PHPXC\Command;
+use Symfony\Component\Console\Application;
+use MCStreetguy\ComposerParser\Factory as ComposerParser;
+
+$composer = ComposerParser::parse(__DIR__ . '/../composer.json');
+
+$application = new Application($composer->getDescription(), $composer->getVersion());
+$application->add(new Command\Create());
+$application->run();

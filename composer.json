@@ -1,0 +1,35 @@
+{
+    "name": "lsbproject/phpxc",
+    "description": "PHPXC. Utility to manage PHP project creation \uD83D\uDCE6",
+    "version": "1.0.0",
+    "type": "cli",
+    "license": "MIT",
+    "bin": "bin/phpxc",
+    "authors": [
+        {
+            "name": "victor.fedorenko",
+            "email": "fedorenko22116@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "symfony/console": "^v5.3",
+        "mcstreetguy/composer-parser": "v1.1.0",
+        "myclabs/php-enum": "^1.8"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "lsbproject/php-clean-code-rules": "^2.0",
+        "phpstan/phpstan": "^0.12.93"
+    },
+    "scripts": {
+        "lint": "phpcs",
+        "lint:fix": "phpcbf",
+        "analyse": "phpstan analyse src --level max"
+    },
+    "autoload": {
+        "psr-4": {
+            "LSBProject\\PHPXC\\": "src/"
+        }
+    }
+}
