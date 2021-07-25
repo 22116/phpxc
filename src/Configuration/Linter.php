@@ -33,4 +33,9 @@ final class Linter extends Enum implements DeepNodeInterface
             default => throw new InvalidNodeException()
         };
     }
+
+    public static function getTitle(): string
+    {
+        return 'Linting tool';
+    }
 }

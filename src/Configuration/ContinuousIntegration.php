@@ -24,4 +24,9 @@ final class ContinuousIntegration extends Enum implements NodeInterface
             default => throw new InvalidNodeException()
         };
     }
+
+    public static function getTitle(): string
+    {
+        return 'Continuous Integration';
+    }
 }

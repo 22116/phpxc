@@ -20,4 +20,9 @@ final class StaticAnalyzer extends Enum implements MultiNodeInterface
             default => throw new InvalidNodeException()
         };
     }
+
+    public static function getTitle(): string
+    {
+        return 'Static Analyzer tool';
+    }
 }

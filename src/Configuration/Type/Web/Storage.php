@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Configuration\Type\Web;
 
-use LSBProject\PHPXC\Configuration\NodeInterface;
+use LSBProject\PHPXC\Configuration\MultiNodeInterface;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Storage extends Enum implements NodeInterface
+final class Storage extends Enum implements MultiNodeInterface
 {
-    private const NONE = 'none';
     private const MYSQL = 'mysql';
     private const MARIADB = 'mariadb';
     private const CLICKHOUSE = 'clickhouse';
@@ -20,7 +19,6 @@ final class Storage extends Enum implements NodeInterface
     public function getDescription(): string
     {
         return match ($this->value) {
-            self::NONE => 'None',
             self::MYSQL => 'MySQL',
             self::MARIADB => 'MariaDB',
             self::CLICKHOUSE => 'ClickHouse',
@@ -28,5 +26,10 @@ final class Storage extends Enum implements NodeInterface
             self::MONGODB => 'MongoDB',
             default => throw new InvalidNodeException()
         };
+    }
+
+    public static function getTitle(): string
+    {
+        return 'Storages';
     }
 }

@@ -21,4 +21,9 @@ final class Async extends Enum implements NodeInterface
             default => throw new InvalidNodeException()
         };
     }
+
+    public static function getTitle(): string
+    {
+        return 'Asynchronous Framework';
+    }
 }

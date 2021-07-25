@@ -21,4 +21,9 @@ final class Cache extends Enum implements MultiNodeInterface
             default => throw new InvalidNodeException()
         };
     }
+
+    public static function getTitle(): string
+    {
+        return 'Caching tools';
+    }
 }

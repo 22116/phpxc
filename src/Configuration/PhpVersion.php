@@ -28,4 +28,9 @@ final class PhpVersion extends Enum implements NodeInterface
             default => throw new InvalidNodeException()
         };
     }
+
+    public static function getTitle(): string
+    {
+        return 'PHP version';
+    }
 }

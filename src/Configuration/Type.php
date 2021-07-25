@@ -49,4 +49,9 @@ final class Type extends Enum implements DeepNodeInterface
             default => throw new InvalidNodeException()
         };
     }
+
+    public static function getTitle(): string
+    {
+        return 'Application type';
+    }
 }

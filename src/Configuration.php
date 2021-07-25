@@ -33,4 +33,17 @@ final class Configuration implements DeepNodeInterface
     {
         return 'Root configuration object';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function values(): array
+    {
+        return [];
+    }
+
+    public static function getTitle(): string
+    {
+        return 'Root';
+    }
 }

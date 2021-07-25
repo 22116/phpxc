@@ -20,4 +20,9 @@ final class Containerization extends Enum implements NodeInterface
             default => throw new InvalidNodeException()
         };
     }
+
+    public static function getTitle(): string
+    {
+        return 'Containerization tool';
+    }
 }
