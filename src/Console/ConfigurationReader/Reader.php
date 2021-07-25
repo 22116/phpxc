@@ -60,8 +60,10 @@ final class Reader
     private function getReaders(): array
     {
         return [
+            new Strategy\Text($this->input, $this->output),
             new Strategy\Checkbox($this->input, $this->output),
             new Strategy\Choice($this->input, $this->output),
+            new Strategy\Aggregator(),
         ];
     }
 }

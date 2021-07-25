@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace LSBProject\PHPXC\Configuration;
+namespace LSBProject\PHPXC\Configuration\Composer;
 
+use LSBProject\PHPXC\Configuration\ChoiceNodeInterface;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class PhpVersion extends Enum implements NodeInterface
+final class PhpVersion extends Enum implements ChoiceNodeInterface
 {
     private const V7 = '7';
     private const V71 = '7.1';

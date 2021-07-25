@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Configuration\Linter;
 
-use LSBProject\PHPXC\Configuration\MultiNodeInterface;
+use LSBProject\PHPXC\Configuration\MultiChoiceNodeInterface;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class PhpcsRules extends Enum implements MultiNodeInterface
+final class PhpcsRules extends Enum implements MultiChoiceNodeInterface
 {
     private const PSR2 = 'psr2';
     private const PSR12 = 'psr12';

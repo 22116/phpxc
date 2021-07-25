@@ -19,7 +19,8 @@
         "mcstreetguy/composer-parser": "v1.1.0",
         "myclabs/php-enum": "^1.8",
         "symfony/dependency-injection": "^5.3",
-        "symfony/config": "^5.3"
+        "symfony/config": "^5.3",
+        "twig/twig": "^3.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",

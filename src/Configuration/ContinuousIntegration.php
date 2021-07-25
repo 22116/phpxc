@@ -7,7 +7,7 @@ namespace LSBProject\PHPXC\Configuration;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class ContinuousIntegration extends Enum implements NodeInterface
+final class ContinuousIntegration extends Enum implements ChoiceNodeInterface
 {
     private const NONE = 'none';
     private const GITHUB = 'github';

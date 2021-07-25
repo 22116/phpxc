@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Configuration\Type\Web;
 
-use LSBProject\PHPXC\Configuration\MultiNodeInterface;
+use LSBProject\PHPXC\Configuration\MultiChoiceNodeInterface;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Storage extends Enum implements MultiNodeInterface
+final class Storage extends Enum implements MultiChoiceNodeInterface
 {
     private const MYSQL = 'mysql';
     private const MARIADB = 'mariadb';

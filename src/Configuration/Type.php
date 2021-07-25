@@ -10,7 +10,7 @@ use LSBProject\PHPXC\Configuration\Type\Web;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Type extends Enum implements DeepNodeInterface
+final class Type extends Enum implements ChoiceNodeInterface, DeepNodeInterface
 {
     private const LIBRARY = 'library';
     private const WEB = 'web';

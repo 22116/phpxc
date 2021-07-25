@@ -6,14 +6,19 @@ namespace LSBProject\PHPXC\Console\ConfigurationReader\Strategy;
 
 use BlueConsole\MultiSelect;
 use Generator;
-use LSBProject\PHPXC\Configuration\MultiNodeInterface;
+use LSBProject\PHPXC\Configuration\MultiChoiceNodeInterface;
 use ReflectionClass;
+use ReflectionException;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class Checkbox extends AbstractCheckbox
 {
     /**
      * {@inheritdoc}
+     *
+     * @param class-string<MultiChoiceNodeInterface> $node
+     *
+     * @throws ReflectionException
      */
     public function read(string $node): Generator
     {
@@ -34,6 +39,6 @@ final class Checkbox extends AbstractCheckbox
 
     public function supports(string $node): bool
     {
-        return (new ReflectionClass($node))->implementsInterface(MultiNodeInterface::class);
+        return (new ReflectionClass($node))->implementsInterface(MultiChoiceNodeInterface::class);
     }
 }

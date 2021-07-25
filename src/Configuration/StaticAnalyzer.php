@@ -7,7 +7,7 @@ namespace LSBProject\PHPXC\Configuration;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class StaticAnalyzer extends Enum implements MultiNodeInterface
+final class StaticAnalyzer extends Enum implements MultiChoiceNodeInterface
 {
     private const PHPSTAN = 'phpstan';
     private const PSALM = 'psalm';

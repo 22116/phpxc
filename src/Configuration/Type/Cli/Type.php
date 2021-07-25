@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Configuration\Type\Cli;
 
+use LSBProject\PHPXC\Configuration\ChoiceNodeInterface;
 use LSBProject\PHPXC\Configuration\DeepNodeInterface;
 use LSBProject\PHPXC\Configuration\Type\Cli\Type\Async;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Type extends Enum implements DeepNodeInterface
+final class Type extends Enum implements ChoiceNodeInterface, DeepNodeInterface
 {
     private const SYNC = 'sync';
     private const ASYNC = 'async';

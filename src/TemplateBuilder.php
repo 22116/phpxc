@@ -8,6 +8,6 @@ final class TemplateBuilder
 {
     public function build(NodeCollection $nodes, string $path): void
     {
-        // TODO
+        var_dump($nodes);
     }
 }

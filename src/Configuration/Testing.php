@@ -7,7 +7,7 @@ namespace LSBProject\PHPXC\Configuration;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Testing extends Enum implements MultiNodeInterface
+final class Testing extends Enum implements MultiChoiceNodeInterface
 {
     private const PHPUNIT = 'phpunit';
     private const BEHAT = 'behat';

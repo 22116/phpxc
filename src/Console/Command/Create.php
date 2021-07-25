@@ -26,6 +26,7 @@ final class Create extends Command
         $this
             ->setName('create')
             ->setDescription('Create new project')
+            ->setHelp('This command helps in base project setup. All options are configuring interactively.')
             ->addArgument(
                 self::ARGUMENT_PATH,
                 InputArgument::REQUIRED,

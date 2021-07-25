@@ -8,9 +8,8 @@ use LSBProject\PHPXC\Configuration\Linter\PhpcsRules;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Linter extends Enum implements DeepNodeInterface
+final class Linter extends Enum implements MultiChoiceNodeInterface, DeepNodeInterface
 {
-    private const NONE = 'none';
     private const PHPCS = 'phpcs';
 
     /**
@@ -19,7 +18,6 @@ final class Linter extends Enum implements DeepNodeInterface
     public function getChildren(): array
     {
         return match ($this->value) {
-            self::NONE => [],
             self::PHPCS => [PhpcsRules::class],
             default => throw new InvalidNodeException()
         };
@@ -28,7 +26,6 @@ final class Linter extends Enum implements DeepNodeInterface
     public function getDescription(): string
     {
         return match ($this->value) {
-            self::NONE => 'None',
             self::PHPCS => 'PHPCS',
             default => throw new InvalidNodeException()
         };

@@ -8,23 +8,22 @@ use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
-use LSBProject\PHPXC\Configuration\DeepNodeInterface;
-use LSBProject\PHPXC\Configuration\MultiNodeInterface;
+use LSBProject\PHPXC\Configuration\ChoiceNodeInterface;
 use LSBProject\PHPXC\Configuration\NodeInterface;
 use OutOfBoundsException;
 
 /**
- * @implements IteratorAggregate<int, NodeInterface|DeepNodeInterface|MultiNodeInterface>
+ * @implements IteratorAggregate<int, NodeInterface>
  */
 final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
 {
     /**
-     * @var array<NodeInterface|DeepNodeInterface|MultiNodeInterface>
+     * @var array<NodeInterface>
      */
     private array $nodes;
 
     /**
-     * @param array<NodeInterface|DeepNodeInterface|MultiNodeInterface> $nodes
+     * @param array<NodeInterface> $nodes
      */
     public function __construct(array $nodes = [])
     {
@@ -56,7 +55,7 @@ final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
      *
      * @param int $offset
      */
-    public function offsetGet($offset): NodeInterface|DeepNodeInterface|MultiNodeInterface
+    public function offsetGet($offset): NodeInterface
     {
         return $this->offsetExists($offset) ? $this->nodes[$offset] : throw new OutOfBoundsException();
     }
@@ -65,7 +64,7 @@ final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
      * {@inheritdoc}
      *
      * @param int $offset
-     * @param NodeInterface $value
+     * @param ChoiceNodeInterface $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -85,7 +84,7 @@ final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
     /**
      * @param class-string<NodeInterface> $nodeType
      */
-    public function findByNode(string $nodeType): NodeInterface|DeepNodeInterface|MultiNodeInterface|null
+    public function findByNode(string $nodeType): NodeInterface|null
     {
         foreach ($this->nodes as $node) {
             if ($node instanceof $nodeType) {

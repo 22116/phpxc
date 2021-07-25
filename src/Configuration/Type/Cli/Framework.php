@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Configuration\Type\Cli;
 
-use LSBProject\PHPXC\Configuration\NodeInterface;
+use LSBProject\PHPXC\Configuration\ChoiceNodeInterface;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Framework extends Enum implements NodeInterface
+final class Framework extends Enum implements ChoiceNodeInterface
 {
     private const NONE = 'none';
     private const WEBMOZART = 'webmozart';

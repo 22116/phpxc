@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Configuration\Type\Library;
 
-use LSBProject\PHPXC\Configuration\NodeInterface;
+use LSBProject\PHPXC\Configuration\ChoiceNodeInterface;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Type extends Enum implements NodeInterface
+final class Type extends Enum implements ChoiceNodeInterface
 {
     private const EMPTY = 'empty';
     private const SYMFONY_BUNDLE = 'symfony-bundle';

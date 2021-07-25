@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Configuration\Type\Cli\Type;
 
-use LSBProject\PHPXC\Configuration\NodeInterface;
+use LSBProject\PHPXC\Configuration\ChoiceNodeInterface;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Async extends Enum implements NodeInterface
+final class Async extends Enum implements ChoiceNodeInterface
 {
     private const REACTPHP = 'reactphp';
     private const AMP = 'amp';

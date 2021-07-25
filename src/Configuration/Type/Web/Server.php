@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Configuration\Type\Web;
 
-use LSBProject\PHPXC\Configuration\NodeInterface;
+use LSBProject\PHPXC\Configuration\ChoiceNodeInterface;
 use LSBProject\PHPXC\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Server extends Enum implements NodeInterface
+final class Server extends Enum implements ChoiceNodeInterface
 {
     private const EMBEDED = 'embeded';
     private const APACHE = 'apache';

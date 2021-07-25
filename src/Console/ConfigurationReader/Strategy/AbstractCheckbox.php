@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Console\ConfigurationReader\Strategy;
 
-use LSBProject\PHPXC\Configuration\NodeInterface;
+use LSBProject\PHPXC\Configuration\ChoiceNodeInterface;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,7 +18,7 @@ abstract class AbstractCheckbox implements NodeParserStrategyInterface
     }
 
     /**
-     * @param class-string<NodeInterface> $nodeClass
+     * @param class-string<ChoiceNodeInterface> $nodeClass
      *
      * @throws ReflectionException
      *
@@ -36,13 +36,13 @@ abstract class AbstractCheckbox implements NodeParserStrategyInterface
         $style->writeln('(<Space> to pick, <Enter> to continue)');
         $style->newLine();
 
-        $choices = array_map(static fn(NodeInterface $node) => $node->getDescription(), $options);
+        $choices = array_map(static fn(ChoiceNodeInterface $node) => $node->getDescription(), $options);
 
         return array_values($choices);
     }
 
     /**
-     * @param class-string<NodeInterface> $nodeClass
+     * @param class-string<ChoiceNodeInterface> $nodeClass
      *
      * @throws ReflectionException
      */
