@@ -11,25 +11,37 @@
             "email": "fedorenko22116@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "minimum-stability": "dev",
     "require": {
+        "php": "^8",
         "symfony/console": "^v5.3",
         "mcstreetguy/composer-parser": "v1.1.0",
-        "myclabs/php-enum": "^1.8"
+        "myclabs/php-enum": "^1.8",
+        "symfony/dependency-injection": "^5.3",
+        "symfony/config": "^5.3"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "lsbproject/php-clean-code-rules": "^2.0",
-        "phpstan/phpstan": "^0.12.93"
+        "phpstan/phpstan": "^0.12.93",
+        "timeweb/phpstan-enum": "^2.3",
+        "bluetree-service/symfony-console-style": "dev-master"
     },
     "scripts": {
         "lint": "phpcs",
         "lint:fix": "phpcbf",
-        "analyse": "phpstan analyse src --level max"
+        "analyze": "phpstan analyse src"
     },
     "autoload": {
         "psr-4": {
             "LSBProject\\PHPXC\\": "src/"
         }
-    }
+    },
+    "repositories":[
+        {
+            "type": "git",
+            "url": "git@github.com:22116/symfony-console-style.git"
+        }
+    ]
 }
