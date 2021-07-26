@@ -10,14 +10,14 @@ use MyCLabs\Enum\Enum;
 
 final class Server extends Enum implements ChoiceNodeInterface
 {
-    private const EMBEDED = 'embeded';
+    private const EMBEDDED = 'embedded';
     private const APACHE = 'apache';
     private const NGINX = 'nginx';
 
     public function getDescription(): string
     {
         return match ($this->value) {
-            self::EMBEDED => 'Embeded',
+            self::EMBEDDED => 'Embedded',
             self::APACHE => 'Apache',
             self::NGINX => 'Nginx',
             default => throw new InvalidNodeException()
