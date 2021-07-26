@@ -104,4 +104,9 @@ final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
     {
         return new self([...$this->nodes, ...$collection]);
     }
+
+    public function test(): int
+    {
+        return 1;
+    }
 }

@@ -6,11 +6,13 @@ namespace LSBProject\PHPXC\Console\Command;
 
 use LSBProject\PHPXC\Configuration;
 use LSBProject\PHPXC\Console\ConfigurationReader\Reader;
+use LSBProject\PHPXC\Console\IOStyle;
 use LSBProject\PHPXC\TemplateBuilder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 final class Create extends Command
 {
@@ -42,8 +44,17 @@ final class Create extends Command
 
         /** @var string $path */
         $path = $input->getArgument(self::ARGUMENT_PATH);
+        $io = (new IOStyle($input, $output));
 
-        $this->templateBuilder->build($nodes, $path);
+        try {
+            $this->templateBuilder->build($nodes, $path);
+        } catch (Throwable $exception) {
+            $io->error($exception->getMessage());
+
+            return self::FAILURE;
+        }
+
+        $io->success('Project successfully created! 🔥🔥🔥');
 
         return self::SUCCESS;
     }

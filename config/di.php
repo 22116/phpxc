@@ -20,6 +20,7 @@ return static function(ContainerConfigurator $configurator): void {
 
     $services
         ->set(TemplateBuilder::class, TemplateBuilder::class)
+            ->args([service(Environment::class)])
 
         ->set(Command\Create::class, Command\Create::class)
             ->args([service(TemplateBuilder::class)])
@@ -29,7 +30,7 @@ return static function(ContainerConfigurator $configurator): void {
 
         ->set(Environment::class, Environment::class)
             ->args([service(FilesystemLoader::class), [
-                'cache' => __DIR__ . '/../twig_cache',
+                'debug' => true
             ]])
     ;
 };

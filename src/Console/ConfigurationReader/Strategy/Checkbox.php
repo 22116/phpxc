@@ -7,9 +7,9 @@ namespace LSBProject\PHPXC\Console\ConfigurationReader\Strategy;
 use BlueConsole\MultiSelect;
 use Generator;
 use LSBProject\PHPXC\Configuration\MultiChoiceNodeInterface;
+use LSBProject\PHPXC\Console\IOStyle;
 use ReflectionClass;
 use ReflectionException;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class Checkbox extends AbstractCheckbox
 {
@@ -24,7 +24,7 @@ final class Checkbox extends AbstractCheckbox
     {
         $choices = $this->buildQuestion($node, 'Choose several options:');
 
-        $style = new SymfonyStyle($this->input, $this->output);
+        $style = new IOStyle($this->input, $this->output);
         $multiselect = new MultiSelect($style);
         $selected = $multiselect->renderMultiSelect($choices);
 
@@ -33,8 +33,6 @@ final class Checkbox extends AbstractCheckbox
         foreach ($selected as $item) {
             yield array_values($options)[$item];
         }
-
-        $style->write(sprintf("\033\143"));
     }
 
     public function supports(string $node): bool
