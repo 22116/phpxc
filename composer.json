@@ -42,7 +42,7 @@
     "repositories":[
         {
             "type": "git",
-            "url": "git@github.com:22116/symfony-console-style.git"
+            "url": "https://github.com/22116/symfony-console-style.git"
         }
     ]
 }
