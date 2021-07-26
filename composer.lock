@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "017bbfbdf4b690e2f7852c1aef40e5f9",
+    "content-hash": "0a265cd071b8d2ca6f88250087ad4074",
     "packages": [
         {
             "name": "mcstreetguy/composer-parser",
@@ -1359,7 +1359,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:22116/symfony-console-style.git",
+                "url": "https://github.com/22116/symfony-console-style.git",
                 "reference": "6bfe29188a5f4edfd3416cca00aa45a0dba3f982"
             },
             "require": {
