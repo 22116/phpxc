@@ -40,11 +40,13 @@ final class Create extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $reader = new Reader($input, $output);
-        $nodes = $reader->read(new Configuration());
+        $nodes = $reader->read(Configuration::class);
 
         /** @var string $path */
         $path = $input->getArgument(self::ARGUMENT_PATH);
-        $io = (new IOStyle($input, $output));
+        $io = new IOStyle($input, $output);
+
+        $io->clear();
 
         try {
             $this->templateBuilder->build($nodes, $path);

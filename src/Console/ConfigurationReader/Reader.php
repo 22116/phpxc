@@ -16,33 +16,22 @@ final class Reader
     {
     }
 
-    public function read(Configuration $configuration): NodeCollection
-    {
-        $nodes = new NodeCollection();
-
-        foreach ($configuration->getChildren() as $nodeClass) {
-            $nodes = $nodes->merge($this->performReaders($nodeClass));
-        }
-
-        return $nodes;
-    }
-
     /**
-     * @param class-string<Configuration\NodeInterface> $nodeClass
+     * @param class-string<Configuration\NodeInterface> $configuration
      */
-    private function performReaders(string $nodeClass): NodeCollection
+    public function read(string $configuration): NodeCollection
     {
         $nodes = new NodeCollection();
 
         foreach ($this->getReaders() as $reader) {
-            if ($reader->supports($nodeClass)) {
+            if ($reader->supports($configuration)) {
                 /** @var Configuration\NodeInterface $node */
-                foreach ($reader->read($nodeClass) as $node) {
+                foreach ($reader->read($configuration) as $node) {
                     $nodes->add($node);
 
                     if ($node instanceof Configuration\DeepNodeInterface) {
                         foreach ($node->getChildren() as $child) {
-                            $nodes = $nodes->merge($this->performReaders($child));
+                            $nodes = $nodes->merge($this->read($child));
                         }
                     }
                 }

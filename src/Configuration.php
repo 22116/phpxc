@@ -15,7 +15,10 @@ final class Configuration implements DeepNodeInterface
     public function getChildren(): array
     {
         return [
-            Types\Composer::class,
+            Types\Composer\Name::class,
+            Types\Composer\Description::class,
+            Types\Composer\License::class,
+            Types\Composer\PhpVersion::class,
             Types\Type::class,
             Types\Linter::class,
             Types\StaticAnalyzer::class,

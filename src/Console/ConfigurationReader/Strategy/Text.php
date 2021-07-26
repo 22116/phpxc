@@ -24,7 +24,8 @@ final class Text implements NodeParserStrategyInterface
     public function read(string $node): Generator
     {
         $style = new IOStyle($this->input, $this->output);
-        $style->write(sprintf("\033\143"));
+
+        $style->clear();
 
         /** @var TextNodeInterface $option */
         $option = new $node();

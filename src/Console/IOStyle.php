@@ -17,4 +17,9 @@ final class IOStyle extends SymfonyStyle
     {
         $this->block($message, 'ERROR', 'fg=black;bg=red', ' ', true);
     }
+
+    public function clear(): void
+    {
+        $this->write(sprintf("\033\143"));
+    }
 }

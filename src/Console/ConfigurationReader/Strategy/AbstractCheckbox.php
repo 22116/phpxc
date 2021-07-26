@@ -30,7 +30,7 @@ abstract class AbstractCheckbox implements NodeParserStrategyInterface
         $title = $this->invokeStaticMethod($nodeClass, 'getTitle');
 
         $style = new IOStyle($this->input, $this->output);
-        $style->write(sprintf("\033\143"));
+        $style->clear();
         $style->writeln($title);
         $style->writeln($question);
         $style->writeln('(<Space> to pick, <Enter> to continue)');
