@@ -1,6 +1,6 @@
 {
     "name": "lsbproject/phpxc",
-    "description": "PHPXC. Utility to manage PHP project creation \uD83D\uDCE6",
+    "description": "PHPXC. CLI to manage PHP project creation \uD83D\uDCE6",
     "version": "1.0.0",
     "type": "cli",
     "license": "MIT",
