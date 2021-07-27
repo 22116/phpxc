@@ -20,7 +20,8 @@
         "myclabs/php-enum": "^1.8",
         "symfony/dependency-injection": "^5.3",
         "symfony/config": "^5.3",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "jetbrains/phpstorm-attributes": "^1.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
