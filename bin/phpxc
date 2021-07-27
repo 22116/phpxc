@@ -20,4 +20,5 @@ $loader->load(__DIR__ . '/../config/di.php');
 
 $application = new Application($composer->getDescription(), $composer->getVersion());
 $application->add($containerBuilder->get(Command\Create::class));
+$application->add($containerBuilder->get(Command\Config::class));
 $application->run();

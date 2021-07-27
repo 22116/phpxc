@@ -23,18 +23,19 @@ final class Type extends Enum implements ChoiceNodeInterface, DeepNodeInterface
     {
         return match ($this->value) {
             self::WEB => [
-                Web\Server::class,
-                Web\Storage::class,
-                Web\Cache::class,
-                Web\MessageBroker::class,
                 Web\Framework::class,
+                Web\Containerization::class,
             ],
             self::CLI => [
+                Cli\BinaryName::class,
                 Cli\Framework::class,
                 Cli\Type::class,
+                Containerization::class,
             ],
             self::LIBRARY => [
+                Library\NamespaceName::class,
                 Library\Type::class,
+                Containerization::class,
             ],
             default => throw new InvalidNodeException()
         };

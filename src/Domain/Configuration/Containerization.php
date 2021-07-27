@@ -7,10 +7,10 @@ namespace LSBProject\PHPXC\Domain\Configuration;
 use LSBProject\PHPXC\Domain\Exception\InvalidNodeException;
 use MyCLabs\Enum\Enum;
 
-final class Containerization extends Enum implements ChoiceNodeInterface
+class Containerization extends Enum implements ChoiceNodeInterface
 {
-    private const NONE = 'none';
-    private const DOCKER = 'docker';
+    protected const NONE = 'none';
+    protected const DOCKER = 'docker';
 
     public function getDescription(): string
     {

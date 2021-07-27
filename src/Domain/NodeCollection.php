@@ -19,7 +19,7 @@ use OutOfBoundsException;
  */
 final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
 {
-    private const NAMESPACE_ALIAS = Configuration::class . '\\';
+    public const NAMESPACE_ALIAS = Configuration::class . '\\';
 
     /**
      * @var array<NodeInterface>

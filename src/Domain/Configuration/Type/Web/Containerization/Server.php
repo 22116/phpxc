@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LSBProject\PHPXC\Domain\Configuration\Type\Web;
+namespace LSBProject\PHPXC\Domain\Configuration\Type\Web\Containerization;
 
 use LSBProject\PHPXC\Domain\Configuration\ChoiceNodeInterface;
 use LSBProject\PHPXC\Domain\Exception\InvalidNodeException;

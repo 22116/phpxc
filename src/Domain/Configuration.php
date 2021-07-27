@@ -23,7 +23,6 @@ final class Configuration implements DeepNodeInterface
             Types\Linter::class,
             Types\StaticAnalyzer::class,
             Types\Testing::class,
-            Types\Containerization::class,
             Types\ContinuousIntegration::class,
         ];
     }

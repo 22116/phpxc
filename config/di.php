@@ -33,6 +33,7 @@ return static function(ContainerConfigurator $configurator): void {
         ->set(TemplateBuilder::class, TemplateBuilder::class)
             ->args([service(Environment::class), service(FilesystemInterface::class)])
 
+        ->set(Command\Config::class, Command\Config::class)
         ->set(Command\Create::class, Command\Create::class)
             ->args([service(TemplateBuilder::class), service(ScriptExecutor::class)])
 
