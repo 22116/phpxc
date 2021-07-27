@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Domain;
 
+use LSBProject\PHPXC\Domain\Configuration\Composer\PhpVersion;
 use LSBProject\PHPXC\Domain\Configuration\Linter;
 use LSBProject\PHPXC\Domain\Configuration\StaticAnalyzer;
 use LSBProject\PHPXC\Domain\Configuration\Testing;
@@ -26,6 +27,10 @@ final class ScriptExecutor
     public function after(NodeCollection $nodes, string $path): void
     {
         $this->executor->execute("composer update -d $path --ignore-platform-reqs", 'Cannot install dependencies');
+
+        if ($nodes->has(PhpVersion::V8())) {
+            $this->executor->execute("composer require -d $path jetbrains/phpstorm-attributes");
+        }
 
         if ($nodes->has(Linter::PHPCS())) {
             $this->executor->execute("composer require -d $path --dev squizlabs/php_codesniffer");
