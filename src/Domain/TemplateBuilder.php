@@ -42,7 +42,7 @@ final class TemplateBuilder
             if ($directory->isDir()) {
                 $this->filesystem->makeDirectory($fsName);
             } else {
-                $data = $this->twig->render($templateName, ['nodes' => $nodes]);
+                $data = $this->twig->render($templateName, ['nodes' => $nodes->toArray()]);
 
                 if (trim($data)) {
                     $this->filesystem->writeToFile($fsName, $data);

@@ -9,9 +9,7 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use JetBrains\PhpStorm\Pure;
-use LSBProject\PHPXC\Domain\Configuration\ChoiceNodeInterface;
 use LSBProject\PHPXC\Domain\Configuration\NodeInterface;
-use MyCLabs\Enum\Enum;
 use OutOfBoundsException;
 
 /**
@@ -19,10 +17,8 @@ use OutOfBoundsException;
  */
 final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
 {
-    public const NAMESPACE_ALIAS = Configuration::class . '\\';
-
     /**
-     * @var array<NodeInterface>
+     * @var array<string|int, NodeInterface>
      */
     private array $nodes;
 
@@ -68,7 +64,7 @@ final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
      * {@inheritdoc}
      *
      * @param int $offset
-     * @param ChoiceNodeInterface $value
+     * @param NodeInterface $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -85,52 +81,22 @@ final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
         unset($this->nodes[$offset]);
     }
 
-    /**
-     * @template T of NodeInterface
-     *
-     * @param class-string<T> $type
-     *
-     * @return T|null
-     */
-    #[Pure]
-    public function find(string $type, ?string $key = null): NodeInterface|null
+    public function set(string $key, NodeInterface $node): void
     {
-        /** @var T $node */
-        foreach ($this->nodes as $node) {
-            if (
-                ($node instanceof $type || $node instanceof (self::NAMESPACE_ALIAS . $type)) &&
-                (!($node instanceof Enum) || null === $key || $node->getKey() === $key)
-            ) {
-                    return $node;
-            }
-        }
-
-        return null;
-    }
-
-    public function has(NodeInterface $target): bool
-    {
-        if ($target instanceof Enum) {
-            foreach ($this->nodes as $node) {
-                if ($target->equals($node)) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        return (bool) $this->find($target::class);
-    }
-
-    public function add(NodeInterface $node): void
-    {
-        $this->nodes[] = $node;
+        $this->nodes[$key] = $node;
     }
 
     #[Pure]
     public function merge(self $collection): self
     {
-        return new self([...$this->nodes, ...$collection]);
+        return new self(array_merge($this->nodes, $collection->nodes));
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function toArray(): array
+    {
+        return $this->nodes;
     }
 }

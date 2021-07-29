@@ -1,6 +1,6 @@
 {
-    "name": "{{ nodes.find('Composer\\Name').text }}",
-    "description": "{{ nodes.find('Composer\\Description').text }}",
+    "name": "{{ nodes['name'].text }}",
+    "description": "{{ nodes['description'].text }}",
     "version": "1.0.0",
     "type": "cli",
     "license": "MIT",
@@ -8,7 +8,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": "{{ nodes.find('Composer\\PhpVersion').description }}"
+        "php": "{{ nodes['phpVersion'].description }}"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"

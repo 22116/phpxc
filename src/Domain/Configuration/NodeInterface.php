@@ -6,5 +6,17 @@ namespace LSBProject\PHPXC\Domain\Configuration;
 
 interface NodeInterface
 {
-    public static function getTitle(): string;
+    public function getDescription(): string;
+
+    /**
+     * @return Script[]
+     */
+    public function getPreScripts(): array;
+
+    /**
+     * @return Script[]
+     */
+    public function getPostScripts(): array;
+
+    public function getParentName(): string;
 }

@@ -1,0 +1,166 @@
+name:
+    type: text
+    description: 'Project name (example: lsbproject/my-new-project)'
+
+description:
+    type: text
+    description: 'Description'
+
+license:
+    type: choice
+    description: 'License'
+    options:
+      mit: { description: 'MIT' }
+      dwtfyw: { description: 'Do what the f*ck you want' }
+
+phpVersion:
+    type: choice
+    description: 'PHP version'
+    options:
+        v7_1: { description: '^7.1' }
+        v7_2: { description: '^7.2' }
+        v7_3: { description: '^7.3' }
+        v7_4: { description: '^7.4' }
+        v8:
+            description: '^8.0'
+            postScripts:
+                - 'composer require jetbrains/phpstorm-attributes'
+
+type:
+    type: choice
+    description: 'Application type'
+    options:
+        library:
+            description: 'Library'
+            children:
+                namespace:
+                    type: text
+                    description: 'Namespace name'
+                type:
+                    type: choice
+                    description: 'Library type'
+                    options:
+                        none: { description: 'None' }
+                        symfonyBundle: { description: 'Symfony Bundle' }
+
+        web:
+            description: 'WEB'
+            children:
+                framework:
+                    type: choice
+                    description: 'Framework'
+                    options:
+                        none: { description: 'None' }
+                        symfony:
+                            description: 'Symfony'
+                            preScripts:
+                                - 'composer create-project symfony/skeleton {PATH}'
+                containerization:
+                    type: choice
+                    description: 'Containerization'
+                    options:
+                        none: { description: 'None' }
+                        docker:
+                            description: 'Docker'
+                            children:
+                                server:
+                                    type: choice
+                                    description: 'Server'
+                                    options:
+                                        embedded: { description: 'Embedded' }
+                                        nginx: { description: 'Nginx' }
+                                        apache: { description: 'Apache' }
+                                storage:
+                                    type: multiple
+                                    description: 'Storages'
+                                    options:
+                                        mysql: { description: 'MySql' }
+                                        mariadb: { description: 'MariaDB' }
+                                        clickhouse: { description: 'ClickHouse' }
+                                        postgresql: { description: 'PostgreSQL' }
+                                        mongodb: { description: 'MongoDB' }
+                                cache:
+                                    type: multiple
+                                    description: 'Cache'
+                                    options:
+                                        redis: { description: 'Redis' }
+                                        memcached: { description: 'Memcached' }
+                                message-broker:
+                                    type: multiple
+                                    description: 'Message brokers'
+                                    options:
+                                        kafka: { description: 'Kafka' }
+                                        rabbitmq: { description: 'RabbitMQ' }
+
+        cli:
+            description: 'CLI'
+            children:
+                binary-name:
+                    type: text
+                    description: 'Binary name'
+                framework:
+                    type: choice
+                    description: 'CLI Framework'
+                    options:
+                        none: { description: 'None' }
+                        webmozart: { description: 'WebMozart' }
+                        symfony: { description: 'Symfony' }
+
+linter:
+    type: multiple
+    description: 'Linter'
+    options:
+        phpcs:
+            description: 'PHPCS'
+            children:
+                rules:
+                    type: multiple
+                    description: 'PHPCS Rules'
+                    options:
+                        psr-2: { description: 'PSR-2' }
+                        psr-12: { description: 'PSR-12' }
+                        symfony:
+                            description: 'Symfony'
+                            postScripts:
+                                - 'composer require --dev escapestudios/symfony2-coding-standard'
+                        lsbproject:
+                            description: 'LSBProject'
+                            postScripts:
+                                - 'composer require --dev lsbproject/php-clean-code-rules'
+            postScripts:
+                - 'composer require --dev squizlabs/php_codesniffer'
+
+staticAnalyzer:
+    type: multiple
+    description: 'Static Analyzer'
+    options:
+        phpstan:
+            description: 'PHPStan'
+            postScripts:
+                - 'composer require --dev phpstan/phpstan'
+                - { includes: ['type.web.framework.symfony'], script: 'composer require -d phpstan/phpstan-symfony'}
+        psalm:
+            description: 'Psalm'
+            postScripts:
+                - 'composer require --dev vimeo/psalm'
+
+testing:
+    type: multiple
+    description: 'Testing'
+    options:
+        phpunit:
+            description: 'PHPUnit'
+            postScripts:
+                - 'composer require --dev phpunit/phpunit'
+        behat:
+            description: 'Behat'
+            postScripts:
+                - 'composer require --dev behat/behat'
+
+ci:
+    type: choice
+    description: 'Continuous Integration'
+    options:
+        github: { description: 'GitHub Actions' }
+        gitlab: { description: 'GitLab CI' }
+        travis: { description: 'Travis CI' }
