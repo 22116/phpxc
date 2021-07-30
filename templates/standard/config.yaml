@@ -6,23 +6,16 @@ description:
     type: text
     description: 'Description'
 
-license:
-    type: choice
-    description: 'License'
-    options:
-      mit: { description: 'MIT' }
-      dwtfyw: { description: 'Do what the f*ck you want' }
-
 phpVersion:
     type: choice
     description: 'PHP version'
     options:
-        v7_1: { description: '^7.1' }
-        v7_2: { description: '^7.2' }
-        v7_3: { description: '^7.3' }
-        v7_4: { description: '^7.4' }
+        v7_1: { description: '7.1' }
+        v7_2: { description: '7.2' }
+        v7_3: { description: '7.3' }
+        v7_4: { description: '7.4' }
         v8:
-            description: '^8.0'
+            description: '8.0'
             postScripts:
                 - 'composer require jetbrains/phpstorm-attributes'
 
@@ -33,15 +26,15 @@ type:
         library:
             description: 'Library'
             children:
-                namespace:
-                    type: text
-                    description: 'Namespace name'
                 type:
                     type: choice
                     description: 'Library type'
                     options:
                         none: { description: 'None' }
                         symfonyBundle: { description: 'Symfony Bundle' }
+                namespace:
+                    type: text
+                    description: 'Namespace name'
 
         web:
             description: 'WEB'
@@ -98,9 +91,9 @@ type:
                 binary-name:
                     type: text
                     description: 'Binary name'
-                framework:
+                ui:
                     type: choice
-                    description: 'CLI Framework'
+                    description: 'UI engine'
                     options:
                         none: { description: 'None' }
                         webmozart: { description: 'WebMozart' }
