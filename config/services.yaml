@@ -19,6 +19,9 @@ services:
 
     LSBProject\PHPXC\Application\Console\PathResolver:
         class: LSBProject\PHPXC\Application\Console\PathResolver
+        arguments:
+            - '@LSBProject\PHPXC\Infrastructure\Filesystem'
+            - '@LSBProject\PHPXC\Infrastructure\Git'
 
     LSBProject\PHPXC\Domain\ShellTemplateBuilder:
         class: LSBProject\PHPXC\Domain\ShellTemplateBuilder
@@ -34,8 +37,18 @@ services:
     LSBProject\PHPXC\Application\Console\Configuration\Validator:
         class: LSBProject\PHPXC\Application\Console\Configuration\Validator
 
-    LSBProject\PHPXC\Domain\Contract\FilesystemInterface:
+    LSBProject\PHPXC\Infrastructure\Filesystem:
         class: LSBProject\PHPXC\Infrastructure\Filesystem
+
+    LSBProject\PHPXC\Domain\Contract\FilesystemInterface: '@LSBProject\PHPXC\Infrastructure\Filesystem'
 
     LSBProject\PHPXC\Domain\Contract\ShellExecutorInterface:
         class: LSBProject\PHPXC\Infrastructure\ShellExecutor
+
+    CzProject\GitPhp\Git:
+        class: CzProject\GitPhp\Git
+
+    LSBProject\PHPXC\Infrastructure\Git:
+        class: LSBProject\PHPXC\Infrastructure\Git
+        arguments:
+            - '@CzProject\GitPhp\Git'

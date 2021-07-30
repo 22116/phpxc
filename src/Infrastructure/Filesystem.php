@@ -64,6 +64,14 @@ final class Filesystem implements FilesystemInterface
         return new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
     }
 
+    /**
+     * @return string[]
+     */
+    public function findFileNames(string $path): array
+    {
+        return @scandir($path) ?: [];
+    }
+
     private function isEmpty(string $path): bool
     {
         $dirIterator = new RecursiveIteratorIterator(

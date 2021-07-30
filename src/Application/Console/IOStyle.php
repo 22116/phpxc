@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace LSBProject\PHPXC\Application\Console;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Throwable;
 
 final class IOStyle extends SymfonyStyle
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @param string|string[] $message
-     */
-    public function error($message): void
+    public function exception(Throwable $exception): void
     {
-        $this->block($message, 'ERROR', 'fg=black;bg=red', ' ', true);
+        $this->error($exception->getMessage());
+
+        if ($this->isVerbose()) {
+            $this->writeln($exception->getTraceAsString());
+        }
     }
 
     public function clear(): void
