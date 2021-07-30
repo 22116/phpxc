@@ -7,6 +7,7 @@ namespace LSBProject\PHPXC\Application\Console\Command;
 use LSBProject\PHPXC\Application\Console\Configuration\Reader;
 use LSBProject\PHPXC\Application\Console\Configuration\Validator;
 use LSBProject\PHPXC\Application\Console\IOStyle;
+use LSBProject\PHPXC\Application\Console\PathResolver;
 use LSBProject\PHPXC\Constant;
 use LSBProject\PHPXC\Domain\ShellTemplateBuilder;
 use Symfony\Component\Console\Command\Command;
@@ -22,8 +23,11 @@ final class Create extends Command
     private const ARGUMENT_PATH = 'path';
     private const OPTION_TEMPLATE_PATH = 'template';
 
-    public function __construct(private ShellTemplateBuilder $templateBuilder, private Validator $validator)
-    {
+    public function __construct(
+        private PathResolver $pathResolver,
+        private ShellTemplateBuilder $templateBuilder,
+        private Validator $validator
+    ) {
         parent::__construct();
     }
 
@@ -50,11 +54,8 @@ final class Create extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var string $path */
-        $path = $input->getArgument(self::ARGUMENT_PATH);
-
-        /** @var string $templatePath */
-        $templatePath = $input->getOption(self::OPTION_TEMPLATE_PATH);
+        $path = $this->pathResolver->resolve($input->getArgument(self::ARGUMENT_PATH));
+        $templatePath = $this->pathResolver->resolveTemplate($input->getOption(self::OPTION_TEMPLATE_PATH));
 
         $io = new IOStyle($input, $output);
         $configurationReader = new Reader($input, $output);
@@ -62,7 +63,7 @@ final class Create extends Command
         $io->clear();
 
         try {
-            $data = Yaml::parseFile($templatePath . '/config.yaml');
+            $data = Yaml::parseFile($templatePath->getConfiguration());
 
             $this->validator->validate($data);
 
@@ -70,7 +71,7 @@ final class Create extends Command
 
             $io->info('Building the project');
 
-            $this->templateBuilder->build($nodes, $path, $templatePath . '/template');
+            $this->templateBuilder->build($nodes, $path, $templatePath->getTemplate());
         } catch (Throwable $exception) {
             $io->error($exception->getMessage());
 

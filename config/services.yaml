@@ -2,11 +2,23 @@ services:
     LSBProject\PHPXC\Application\Console\Command\Create:
         class: LSBProject\PHPXC\Application\Console\Command\Create
         arguments:
+            - '@LSBProject\PHPXC\Application\Console\PathResolver'
             - '@LSBProject\PHPXC\Domain\ShellTemplateBuilder'
+            - '@LSBProject\PHPXC\Application\Console\Configuration\Validator'
+
+    LSBProject\PHPXC\Application\Console\Command\Config\Validate:
+        class: LSBProject\PHPXC\Application\Console\Command\Config\Validate
+        arguments:
+            - '@LSBProject\PHPXC\Application\Console\PathResolver'
             - '@LSBProject\PHPXC\Application\Console\Configuration\Validator'
 
     LSBProject\PHPXC\Application\Console\Command\Config\Show:
         class: LSBProject\PHPXC\Application\Console\Command\Config\Show
+        arguments:
+            - '@LSBProject\PHPXC\Application\Console\PathResolver'
+
+    LSBProject\PHPXC\Application\Console\PathResolver:
+        class: LSBProject\PHPXC\Application\Console\PathResolver
 
     LSBProject\PHPXC\Domain\ShellTemplateBuilder:
         class: LSBProject\PHPXC\Domain\ShellTemplateBuilder

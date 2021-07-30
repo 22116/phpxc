@@ -21,4 +21,5 @@ $loader->load(__DIR__ . '/../config/services.yaml');
 $application = new Application($composer->getDescription(), $composer->getVersion());
 $application->add($containerBuilder->get(Command\Create::class));
 $application->add($containerBuilder->get(Command\Config\Show::class));
+$application->add($containerBuilder->get(Command\Config\Validate::class));
 $application->run();
