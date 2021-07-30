@@ -10,15 +10,15 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
 use MCStreetguy\ComposerParser\Factory as ComposerParser;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 $composer = ComposerParser::parse(__DIR__ . '/../composer.json');
 
 $containerBuilder = new ContainerBuilder();
-$loader = new PhpFileLoader($containerBuilder, new FileLocator(__DIR__));
-$loader->load(__DIR__ . '/../config/di.php');
+$loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
+$loader->load(__DIR__ . '/../config/services.yaml');
 
 $application = new Application($composer->getDescription(), $composer->getVersion());
 $application->add($containerBuilder->get(Command\Create::class));
-$application->add($containerBuilder->get(Command\Config::class));
+$application->add($containerBuilder->get(Command\Config\Show::class));
 $application->run();

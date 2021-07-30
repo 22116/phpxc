@@ -34,6 +34,8 @@ final class Multiple extends AbstractChoice
 
             yield new Configuration\Node(
                 description: $option[Validator::DESCRIPTION],
+                preScripts: $this->readScripts($option[Validator::PRE_SCRIPTS] ?? []),
+                postScripts: $this->readScripts($option[Validator::POST_SCRIPTS] ?? []),
                 parentName: (string) array_keys($node[Validator::OPTIONS])[$item],
             );
         }

@@ -13,7 +13,7 @@ final class Script
      * @param string[] $includes
      * @param string[] $excludes
      */
-    public function __construct(private string $command, private array $includes, private array $excludes)
+    public function __construct(private string $command, private array $includes = [], private array $excludes = [])
     {
     }
 

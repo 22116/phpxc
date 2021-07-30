@@ -1,0 +1,29 @@
+services:
+    LSBProject\PHPXC\Application\Console\Command\Create:
+        class: LSBProject\PHPXC\Application\Console\Command\Create
+        arguments:
+            - '@LSBProject\PHPXC\Domain\ShellTemplateBuilder'
+            - '@LSBProject\PHPXC\Application\Console\Configuration\Validator'
+
+    LSBProject\PHPXC\Application\Console\Command\Config\Show:
+        class: LSBProject\PHPXC\Application\Console\Command\Config\Show
+
+    LSBProject\PHPXC\Domain\ShellTemplateBuilder:
+        class: LSBProject\PHPXC\Domain\ShellTemplateBuilder
+        arguments:
+            - '@LSBProject\PHPXC\Domain\TemplateBuilder'
+            - '@LSBProject\PHPXC\Domain\Contract\ShellExecutorInterface'
+
+    LSBProject\PHPXC\Domain\TemplateBuilder:
+        class: LSBProject\PHPXC\Domain\TemplateBuilder
+        arguments:
+            - '@LSBProject\PHPXC\Domain\Contract\FilesystemInterface'
+
+    LSBProject\PHPXC\Application\Console\Configuration\Validator:
+        class: LSBProject\PHPXC\Application\Console\Configuration\Validator
+
+    LSBProject\PHPXC\Domain\Contract\FilesystemInterface:
+        class: LSBProject\PHPXC\Infrastructure\Filesystem
+
+    LSBProject\PHPXC\Domain\Contract\ShellExecutorInterface:
+        class: LSBProject\PHPXC\Infrastructure\ShellExecutor

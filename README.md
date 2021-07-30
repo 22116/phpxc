@@ -1,6 +1,6 @@
 # PHPXC
 
-Utility to manage PHP project creation 📦
+CLI to manage PHP project creation 📦
 
 There are a lot of tools nowadays to setup your very first project 
 such as configuring linters, static analyzers, testing, preparing composer configuration,

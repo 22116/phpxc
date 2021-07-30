@@ -8,10 +8,11 @@ use LSBProject\PHPXC\Application\Console\Configuration\Reader;
 use LSBProject\PHPXC\Application\Console\Configuration\Validator;
 use LSBProject\PHPXC\Application\Console\IOStyle;
 use LSBProject\PHPXC\Constant;
-use LSBProject\PHPXC\Domain\TemplateBuilder;
+use LSBProject\PHPXC\Domain\ShellTemplateBuilder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
@@ -19,8 +20,9 @@ use Throwable;
 final class Create extends Command
 {
     private const ARGUMENT_PATH = 'path';
+    private const OPTION_TEMPLATE_PATH = 'template';
 
-    public function __construct(private TemplateBuilder $templateBuilder, private Validator $validator)
+    public function __construct(private ShellTemplateBuilder $templateBuilder, private Validator $validator)
     {
         parent::__construct();
     }
@@ -36,6 +38,13 @@ final class Create extends Command
                 InputArgument::REQUIRED,
                 'Path to a new project'
             )
+            ->addOption(
+                self::OPTION_TEMPLATE_PATH,
+                't',
+                InputOption::VALUE_REQUIRED,
+                'Template path',
+                Constant::TEMPLATES_PATH . '/standard'
+            )
         ;
     }
 
@@ -43,17 +52,25 @@ final class Create extends Command
     {
         /** @var string $path */
         $path = $input->getArgument(self::ARGUMENT_PATH);
+
+        /** @var string $templatePath */
+        $templatePath = $input->getOption(self::OPTION_TEMPLATE_PATH);
+
         $io = new IOStyle($input, $output);
         $configurationReader = new Reader($input, $output);
 
         $io->clear();
-        $io->info('Building the project');
 
         try {
-            $data = Yaml::parseFile(Constant::CONFIGURATION_PATH);
+            $data = Yaml::parseFile($templatePath . '/config.yaml');
 
             $this->validator->validate($data);
-            $this->templateBuilder->build($configurationReader->read($data), $path);
+
+            $nodes = $configurationReader->read($data);
+
+            $io->info('Building the project');
+
+            $this->templateBuilder->build($nodes, $path, $templatePath . '/template');
         } catch (Throwable $exception) {
             $io->error($exception->getMessage());
 

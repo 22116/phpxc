@@ -6,6 +6,7 @@ namespace LSBProject\PHPXC\Application\Console\Configuration;
 
 use JetBrains\PhpStorm\Pure;
 use LSBProject\PHPXC\Application\Console\Configuration\Strategy;
+use LSBProject\PHPXC\Domain\Configuration\Node;
 use LSBProject\PHPXC\Domain\Configuration\NodeInterface;
 use LSBProject\PHPXC\Domain\NodeCollection;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,9 +33,14 @@ final class Reader
 
                     /** @var NodeInterface $node */
                     foreach ($nodes as $node) {
-                        $nodeName = $node->getParentName() ? ("." . $node->getParentName()) : '';
-                        $nodeKey = $prefix . $key . $nodeName;
+                        if ($node->getParentName()) {
+                            $nodeName = $node->getParentName() ? ("." . $node->getParentName()) : '';
+                            $nodeKey = $prefix . $key . $nodeName;
 
+                            $collection->set($nodeKey, new Node($node->getDescription()));
+                        }
+
+                        $nodeKey = $prefix . $key;
                         $collection->set($nodeKey, $node);
 
                         if (isset($item['options'][$node->getParentName()]['children'])) {

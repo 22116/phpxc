@@ -10,7 +10,7 @@ use LSBProject\PHPXC\Application\Console\IOStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class AbstractChoice implements NodeParserStrategyInterface
+abstract class AbstractChoice extends AbstractNodeParser
 {
     public function __construct(protected InputInterface $input, protected OutputInterface $output)
     {

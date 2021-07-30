@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-final class Text implements NodeParserStrategyInterface
+final class Text extends AbstractNodeParser
 {
     public function __construct(private InputInterface $input, private OutputInterface $output)
     {
@@ -38,6 +38,8 @@ final class Text implements NodeParserStrategyInterface
 
         yield new Configuration\TextNode(
             text: (string) $style->askQuestion($question),
+            preScripts: $this->readScripts($node[Validator::PRE_SCRIPTS] ?? []),
+            postScripts: $this->readScripts($node[Validator::POST_SCRIPTS] ?? []),
             description: $node[Validator::DESCRIPTION],
         );
     }

@@ -43,7 +43,7 @@ final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
     /**
      * {@inheritdoc}
      *
-     * @param int $offset
+     * @param int|string $offset
      */
     public function offsetExists($offset): bool
     {
