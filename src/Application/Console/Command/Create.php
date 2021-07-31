@@ -61,7 +61,7 @@ final class Create extends AbstractCommand
 
             $nodes = $configurationReader->read($data);
 
-            $io->info('Building the project');
+            $io->info('Building the project 🏗️');
 
             $this->templateBuilder->build($nodes, $path, $templatePath->getTemplate());
         } catch (Throwable $exception) {
