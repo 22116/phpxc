@@ -12,12 +12,14 @@ class Node implements NodeInterface
     /**
      * @param Script[] $preScripts
      * @param Script[] $postScripts
+     * @param array<string, string> $extra
      */
     public function __construct(
         protected string $description = '',
         protected array $preScripts = [],
         protected array $postScripts = [],
-        protected string $parentName = ''
+        protected string $parentName = '',
+        protected array $extra = [],
     ) {
     }
 
@@ -45,5 +47,13 @@ class Node implements NodeInterface
     public function getParentName(): string
     {
         return $this->parentName;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtra(): array
+    {
+        return $this->extra;
     }
 }

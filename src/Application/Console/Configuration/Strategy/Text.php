@@ -38,9 +38,10 @@ final class Text extends AbstractNodeParser
 
         yield new Configuration\TextNode(
             text: (string) $style->askQuestion($question),
+            description: $node[Validator::DESCRIPTION],
             preScripts: $this->readScripts($node[Validator::PRE_SCRIPTS] ?? []),
             postScripts: $this->readScripts($node[Validator::POST_SCRIPTS] ?? []),
-            description: $node[Validator::DESCRIPTION],
+            extra: $node[Validator::EXTRA] ?? [],
         );
     }
 

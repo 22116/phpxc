@@ -64,6 +64,21 @@ final class Filesystem implements FilesystemInterface
         return new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
     }
 
+    public function readFile(string $path): string
+    {
+        return file_get_contents($path) ?: '';
+    }
+
+    public function isFile(string $path): bool
+    {
+        return is_file($path);
+    }
+
+    public function isDirectory(string $path): bool
+    {
+        return is_dir($path);
+    }
+
     /**
      * @return string[]
      */

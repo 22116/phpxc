@@ -36,6 +36,7 @@ final class Choice extends AbstractChoice
             preScripts: $this->readScripts($option[Validator::PRE_SCRIPTS] ?? []),
             postScripts: $this->readScripts($option[Validator::POST_SCRIPTS] ?? []),
             parentName: (string) array_keys($node[Validator::OPTIONS])[$selected],
+            extra: $option[Validator::EXTRA] ?? [],
         );
     }
 

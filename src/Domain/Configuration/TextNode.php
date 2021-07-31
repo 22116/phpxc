@@ -13,6 +13,7 @@ final class TextNode extends Node
     /**
      * @param Script[] $preScripts
      * @param Script[] $postScripts
+     * @param array<string, string> $extra
      */
     #[Pure]
     public function __construct(
@@ -20,11 +21,13 @@ final class TextNode extends Node
         string $description = '',
         protected array $preScripts = [],
         protected array $postScripts = [],
+        protected array $extra = [],
     ) {
         parent::__construct(
-            $description,
-            $preScripts,
-            $postScripts
+            description: $description,
+            preScripts: $preScripts,
+            postScripts: $postScripts,
+            extra: $extra,
         );
     }
 

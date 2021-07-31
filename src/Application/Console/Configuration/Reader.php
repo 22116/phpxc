@@ -37,7 +37,10 @@ final class Reader
                             $nodeName = $node->getParentName() ? ("." . $node->getParentName()) : '';
                             $nodeKey = $prefix . $key . $nodeName;
 
-                            $collection->set($nodeKey, new Node($node->getDescription()));
+                            $collection->set($nodeKey, new Node(
+                                description: $node->getDescription(),
+                                extra: $node->getExtra(),
+                            ));
                         }
 
                         $nodeKey = $prefix . $key;

@@ -33,4 +33,8 @@ interface FilesystemInterface
      * @throws FilesystemException
      */
     public function writeToFile(string $file, string $data): void;
+
+    public function readFile(string $path): string;
+    public function isFile(string $path): bool;
+    public function isDirectory(string $path): bool;
 }

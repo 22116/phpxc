@@ -7,7 +7,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": "{{ nodes['phpVersion'].description }}"
+        "php": ">={{ nodes['phpVersion'].description }}"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"

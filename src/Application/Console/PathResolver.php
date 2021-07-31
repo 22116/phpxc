@@ -20,7 +20,7 @@ final class PathResolver
     #[Pure]
     public function resolve(string $path): string
     {
-        return realpath($path) ?: '';
+        return realpath($path) ?: $path;
     }
 
     /**

@@ -19,4 +19,9 @@ interface NodeInterface
     public function getPostScripts(): array;
 
     public function getParentName(): string;
+
+    /**
+     * @return array<string, string>
+     */
+    public function getExtra(): array;
 }

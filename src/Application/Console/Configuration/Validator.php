@@ -19,6 +19,7 @@ class Validator
     public const DESCRIPTION = 'description';
     public const CHILDREN = 'children';
     public const OPTIONS = 'options';
+    public const EXTRA = 'extra';
 
     public const SCRIPT = 'script';
     public const PRE_SCRIPTS = 'preScripts';
