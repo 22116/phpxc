@@ -21,12 +21,20 @@ final class Reader
     /**
      * @param mixed[] $configuration
      */
-    public function read(array $configuration, string $prefix = ''): NodeCollection
+    public function read(array $configuration): NodeCollection
+    {
+        return $this->readNodes($configuration[Validator::NODES]);
+    }
+
+    /**
+     * @param mixed[] $configuration
+     */
+    public function readNodes(array $configuration, string $prefix = ''): NodeCollection
     {
         $prefix = $prefix ? "$prefix." : '';
         $collection = new NodeCollection();
 
-        foreach ($configuration[Validator::NODES] as $key => $item) {
+        foreach ($configuration as $key => $item) {
             foreach ($this->getReaders() as $reader) {
                 if ($reader->supports($item['type'] ?? '')) {
                     $nodes = $reader->read($item);
@@ -46,7 +54,7 @@ final class Reader
 
                         if (isset($item['options'][$node->getParentName()]['children'])) {
                             $collection = $collection->merge(
-                                $this->read(
+                                $this->readNodes(
                                     $item['options'][$node->getParentName()]['children'],
                                     $prefix . $key . $nodeName
                                 )
