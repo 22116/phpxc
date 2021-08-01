@@ -126,7 +126,7 @@ nodes:
                         type: multiple
                         description: 'PHPCS Rules'
                         options:
-                            psr-2: { description: 'PSR-2' }
+                            psr-2:  { description: 'PSR-2' }
                             psr-12: { description: 'PSR-12' }
                             symfony:
                                 description: 'Symfony'
@@ -167,7 +167,7 @@ nodes:
                     - 'composer require --dev behat/behat'
 
     ci:
-        type: choice
+        type: multiple
         description: 'Continuous Integration'
         options:
             github: { description: 'GitHub Actions' }

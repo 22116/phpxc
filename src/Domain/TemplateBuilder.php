@@ -35,8 +35,8 @@ final class TemplateBuilder implements TemplateBuilderInterface
 
         /** @var SplFileInfo $directory */
         foreach ($dirIterator as $directory) {
-            $templateName = str_replace($templatePath, '', $directory->getPathname());
-            $templateName = $twig->createTemplate($templateName)->render($templateData);
+            $originTemplateName = str_replace($templatePath, '', $directory->getPathname());
+            $templateName = $twig->createTemplate($originTemplateName)->render($templateData);
 
             if ('/' === substr($templateName, -1)) {
                 continue;
@@ -47,7 +47,7 @@ final class TemplateBuilder implements TemplateBuilderInterface
             if ($directory->isDir()) {
                 $this->filesystem->makeDirectory($fsName);
             } else {
-                $data = $twig->render($templateName, $templateData);
+                $data = $twig->render($originTemplateName, $templateData);
 
                 if (trim($data)) {
                     if (str_contains($fsName, 'composer.json') && $this->filesystem->isFile($fsName)) {
