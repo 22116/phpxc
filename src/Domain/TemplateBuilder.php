@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LSBProject\PHPXC\Domain;
 
 use JsonException;
-use LSBProject\PHPXC\Constant;
 use LSBProject\PHPXC\Domain\Contract\FilesystemInterface;
 use LSBProject\PHPXC\Domain\Contract\TemplateEngineInterface;
 use LSBProject\PHPXC\Domain\Util\DataStructure;
@@ -13,6 +12,26 @@ use SplFileInfo;
 
 final class TemplateBuilder implements TemplateBuilderInterface
 {
+    private const COMPOSER_ITEMS_ORDER = [
+        'name',
+        'description',
+        'version',
+        'type',
+        'bin',
+        'license',
+        'minimum-stability',
+        'prefer-stable',
+        'require',
+        'require-dev',
+        'autoload',
+        'autoload-dev',
+        'config',
+        'replace',
+        'scripts',
+        'conflict',
+        'extra',
+    ];
+
     public function __construct(
         private FilesystemInterface $filesystem,
         private TemplateEngineInterface $templateEngine
@@ -56,7 +75,7 @@ final class TemplateBuilder implements TemplateBuilderInterface
                         $data = DataStructure::mergeJson(
                             $this->filesystem->readFile($fsName),
                             $data,
-                            Constant::COMPOSER_ITEMS_ORDER
+                            self::COMPOSER_ITEMS_ORDER
                         );
                     }
 
