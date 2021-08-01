@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-{% if nodes['type.cli'] is defined %}
+{% if nodes['type.cli'] %}
 namespace {{ nodes['type.cli.namespace'].text }};
 {% else %}
 namespace App;

@@ -1,4 +1,4 @@
-{% if nodes['type.web.containerization.docker'] is defined %}
+{% if nodes['type.web.containerization.docker'] %}
 .PHONY: run stop rm composer-install composer-update bash-nginx bash-php phpunit phpstan
 
 DOCKER_PROJECT_NAME?={{ nodes['name'] }}
@@ -21,21 +21,21 @@ help:
 @echo 'Composer targets:'
 @echo '  composer-install                    Install required composer packages'
 @echo '  composer-update                     Update required composer packages'
-{% if nodes['staticAnalyzer'] is defined %}
+{% if nodes['staticAnalyzer'] %}
 @echo ''
 @echo 'Run static analysis:'
 {% endif %}
-{% if nodes['staticAnalyzer.phpstan'] is defined %}
+{% if nodes['staticAnalyzer.phpstan'] %}
 @echo '  phpstan                       		 Run analysis with phpstan'
 {% endif %}
-{% if nodes['staticAnalyzer.psalm'] is defined %}
+{% if nodes['staticAnalyzer.psalm'] %}
 @echo '  psalm                       		 Run analysis with psalm'
 {% endif %}
-{% if nodes['testing'] is defined %}
+{% if nodes['testing'] %}
 @echo ''
 @echo 'Run tests:'
 {% endif %}
-{% if nodes['testing.phpunit'] is defined %}
+{% if nodes['testing.phpunit'] %}
 @echo '  phpunit                       		 Run tests with phpunit'
 {% endif %}
 
@@ -62,7 +62,7 @@ docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} run --rm ${DOCKER_PR
 
 bash-php:
 docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} exec ${DOCKER_PROJECT_NAME} bash
-{% if nodes['linter'] is defined %}
+{% if nodes['linter'] %}
 
 lint:
 docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm lint
@@ -70,17 +70,17 @@ docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm lint
 lint-fix:
 docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm lint.fix
 {% endif %}
-{% if nodes['testing.phpunit'] is defined %}
+{% if nodes['testing.phpunit'] %}
 
 phpunit:
 docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm tests.phpunit
 {% endif %}
-{% if nodes['staticAnalyzer.phpstan'] is defined %}
+{% if nodes['staticAnalyzer.phpstan'] %}
 
 phpstan:
 docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm analysis.phpstan
 {% endif %}
-{% if nodes['staticAnalyzer.phpstan'] is defined %}
+{% if nodes['staticAnalyzer.phpstan'] %}
 
 psalm:
 docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm analysis.psalm

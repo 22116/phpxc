@@ -15,6 +15,8 @@ interface FilesystemInterface
     public function iterateDirectories(string $path): iterable;
 
     /**
+     * @param string[] $ignoreList
+     *
      * @throws FilesystemException
      */
     public function removeEmptyDirectories(string $path, array $ignoreList = []): void;

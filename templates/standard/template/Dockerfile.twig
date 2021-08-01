@@ -1,4 +1,4 @@
-{% if nodes['type.cli.containerization.docker'] is defined or nodes['type.library.containerization.docker'] is defined %}
+{% if nodes['type.cli.containerization.docker']  or nodes['type.library.containerization.docker'] %}
 FROM composer:latest as composer
 
 WORKDIR /home/app
@@ -23,7 +23,7 @@ COPY . /home/app
 
 RUN composer install --no-interaction --no-dev
 
-{% if nodes['type.cli'] is defined %}
+{% if nodes['type.cli'] %}
 ENTRYPOINT ["php", "bin/{{ nodes['type.cli.binaryName'].text }}"]
 {% endif %}
 

@@ -8,7 +8,7 @@ Open terminal and execute next line:
 
 ```shell
 composer global require {{ nodes['name'].text }}
-{% if nodes['type.cli'] is defined %}
+{% if nodes['type.cli'] %}
 {{ nodes['type.cli.namespace'].text }}
 {% endif %}
 ```

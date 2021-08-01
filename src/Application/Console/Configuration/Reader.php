@@ -8,8 +8,8 @@ use JetBrains\PhpStorm\Pure;
 use LSBProject\PHPXC\Application\Console\Configuration\Strategy;
 use LSBProject\PHPXC\Domain\Configuration;
 use LSBProject\PHPXC\Domain\Configuration\Node;
-use LSBProject\PHPXC\Domain\Configuration\NodeInterface;
 use LSBProject\PHPXC\Domain\Configuration\NodeCollection;
+use LSBProject\PHPXC\Domain\Configuration\NodeInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

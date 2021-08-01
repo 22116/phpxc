@@ -2,19 +2,19 @@
     "name": "{{ nodes['name'].text }}",
     "description": "{{ nodes['description'].text }}",
     "version": "1.0.0",
-{% if nodes['type.cli'] is defined %}
+{% if nodes['type.cli'] %}
     "type": "cli",
-{% elseif nodes['type.web'] is defined %}
+{% elseif nodes['type.web'] %}
     "type": "application",
-{% elseif nodes['type.library'] is defined %}
-    {%- if nodes['type.library.type.symfonyBundle'] is defined %}
+{% elseif nodes['type.library'] %}
+    {%- if nodes['type.library.type.symfonyBundle'] %}
     "type": "symfony-bundle",
     {%- else %}
     "type": "library",
     {%- endif %}
 {% endif %}
 
-{% if nodes['type.cli'] is defined %}
+{% if nodes['type.cli'] %}
     "bin": "bin/{{ nodes['type.cli.binaryName'].text }}",
 {% endif %}
     "minimum-stability": "stable",
@@ -26,29 +26,29 @@
         "roave/security-advisories": "dev-latest"
     },
     "scripts": {
-{% if nodes['linter.phpcs'] is defined %}
+{% if nodes['linter.phpcs'] %}
         "lint": "phpcs",
         "lint:fix": "phpcbf",
 {% endif %}
-{% if nodes['staticAnalyzer'] is defined %}
-    {%- if nodes['staticAnalyzer.phpstan'] is defined %}
+{% if nodes['staticAnalyzer'] %}
+    {%- if nodes['staticAnalyzer.phpstan'] %}
         "phpstan": "phpstan analyse",
     {%- endif %}
 
-    {%- if nodes['staticAnalyzer.psalm'] is defined %}
+    {%- if nodes['staticAnalyzer.psalm'] %}
 
         "psalm": "psalm src",
     {%- endif %}
 
         "analyze": [
-    {%- if nodes['staticAnalyzer.phpstan'] is defined and nodes['staticAnalyzer.psalm'] is defined %}
+    {%- if nodes['staticAnalyzer.phpstan']  and nodes['staticAnalyzer.psalm'] %}
 
             "@phpstan",
             "@psalm"
-    {%- elseif nodes['staticAnalyzer.phpstan'] is defined %}
+    {%- elseif nodes['staticAnalyzer.phpstan'] %}
 
             "@phpstan"
-    {%- elseif nodes['staticAnalyzer.psalm'] is defined %}
+    {%- elseif nodes['staticAnalyzer.psalm'] %}
 
             "@psalm"
     {%- endif %}
@@ -58,7 +58,7 @@
     },
     "autoload": {
         "psr-4": {
-{% if nodes['type.library.namespace'] is defined %}
+{% if nodes['type.library.namespace'] %}
             "{{ nodes['type.library.namespace'].text }}": "src/"
 {% else %}
             "App\\": "src/"

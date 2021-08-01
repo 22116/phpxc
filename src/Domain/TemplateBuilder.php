@@ -31,16 +31,23 @@ final class TemplateBuilder implements TemplateBuilderInterface
 
         $twig = new Environment(new FilesystemLoader($templatePath));
         $dirIterator = $this->filesystem->iterateDirectories($templatePath);
+        $templateData = ['nodes' => $configuration->getNodes()->toArray()];
 
         /** @var SplFileInfo $directory */
         foreach ($dirIterator as $directory) {
             $templateName = str_replace($templatePath, '', $directory->getPathname());
+            $templateName = $twig->createTemplate($templateName)->render($templateData);
+
+            if ('/' === substr($templateName, -1)) {
+                continue;
+            }
+
             $fsName = str_replace('.twig', '', "$path/$templateName");
 
             if ($directory->isDir()) {
                 $this->filesystem->makeDirectory($fsName);
             } else {
-                $data = $twig->render($templateName, ['nodes' => $configuration->getNodes()->toArray()]);
+                $data = $twig->render($templateName, $templateData);
 
                 if (trim($data)) {
                     if (str_contains($fsName, 'composer.json') && $this->filesystem->isFile($fsName)) {

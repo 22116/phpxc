@@ -1,4 +1,4 @@
-{% if nodes['ci.github'] is defined %}
+{% if nodes['ci.github'] %}
 name: CI
 on: [push, pull_request]
 jobs:
@@ -16,12 +16,12 @@ jobs:
         - name: Install dependencies
           run: composer install
 
-{% if nodes['linter'] is defined %}
+{% if nodes['linter'] %}
         - name: Run linter
           run: composer run lint
 {% endif %}
 
-{% if nodes['staticAnalyzer'] is defined %}
+{% if nodes['staticAnalyzer'] %}
         - name: Run analyzer
           run: composer run analyze
 {% endif %}
