@@ -30,6 +30,10 @@ final class Text extends AbstractNodeParser
         #[ArrayShape([
             Validator::DESCRIPTION => 'string',
             Validator::TYPE_TEXT => 'string',
+            Validator::REGEXP => 'string',
+            Validator::PRE_SCRIPTS => 'array<string|array<string, mixed>>',
+            Validator::POST_SCRIPTS => 'array<string|array<string, mixed>>',
+            Validator::EXTRA => 'array<mixed>',
         ])] array $node
     ): Generator {
         $style = new IOStyle($this->input, $this->output);
