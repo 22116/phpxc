@@ -33,6 +33,7 @@ services:
         class: LSBProject\PHPXC\Domain\TemplateBuilder
         arguments:
             - '@LSBProject\PHPXC\Domain\Contract\FilesystemInterface'
+            - '@LSBProject\PHPXC\Domain\Contract\TemplateEngineInterface'
 
     LSBProject\PHPXC\Application\Console\Configuration\Validator:
         class: LSBProject\PHPXC\Application\Console\Configuration\Validator
@@ -41,6 +42,9 @@ services:
         class: LSBProject\PHPXC\Infrastructure\Filesystem
 
     LSBProject\PHPXC\Domain\Contract\FilesystemInterface: '@LSBProject\PHPXC\Infrastructure\Filesystem'
+
+    LSBProject\PHPXC\Domain\Contract\TemplateEngineInterface:
+        class: LSBProject\PHPXC\Infrastructure\TwigTemplateEngine
 
     LSBProject\PHPXC\Domain\Contract\ShellExecutorInterface:
         class: LSBProject\PHPXC\Infrastructure\ShellExecutor

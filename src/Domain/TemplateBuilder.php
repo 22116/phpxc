@@ -7,15 +7,16 @@ namespace LSBProject\PHPXC\Domain;
 use JsonException;
 use LSBProject\PHPXC\Constant;
 use LSBProject\PHPXC\Domain\Contract\FilesystemInterface;
+use LSBProject\PHPXC\Domain\Contract\TemplateEngineInterface;
 use LSBProject\PHPXC\Domain\Util\DataStructure;
 use SplFileInfo;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 final class TemplateBuilder implements TemplateBuilderInterface
 {
-    public function __construct(private FilesystemInterface $filesystem)
-    {
+    public function __construct(
+        private FilesystemInterface $filesystem,
+        private TemplateEngineInterface $templateEngine
+    ) {
     }
 
     /**
@@ -29,14 +30,15 @@ final class TemplateBuilder implements TemplateBuilderInterface
             $this->filesystem->makeDirectory($path);
         }
 
-        $twig = new Environment(new FilesystemLoader($templatePath));
+        $this->templateEngine->loadTemplates($templatePath);
+
         $dirIterator = $this->filesystem->iterateDirectories($templatePath);
         $templateData = ['nodes' => $configuration->getNodes()->toArray()];
 
         /** @var SplFileInfo $directory */
         foreach ($dirIterator as $directory) {
             $originTemplateName = str_replace($templatePath, '', $directory->getPathname());
-            $templateName = $twig->createTemplate($originTemplateName)->render($templateData);
+            $templateName = $this->templateEngine->render($originTemplateName, $templateData);
 
             if ('/' === substr($templateName, -1)) {
                 continue;
@@ -47,7 +49,7 @@ final class TemplateBuilder implements TemplateBuilderInterface
             if ($directory->isDir()) {
                 $this->filesystem->makeDirectory($fsName);
             } else {
-                $data = $twig->render($originTemplateName, $templateData);
+                $data = $this->templateEngine->renderFile($originTemplateName, $templateData);
 
                 if (trim($data)) {
                     if (str_contains($fsName, 'composer.json') && $this->filesystem->isFile($fsName)) {
