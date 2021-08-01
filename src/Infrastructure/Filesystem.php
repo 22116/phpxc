@@ -13,7 +13,10 @@ use SplFileInfo;
 
 final class Filesystem implements FilesystemInterface
 {
-    public function removeEmptyDirectories(string $path): void
+    /**
+     * {@inheritdoc}
+     */
+    public function removeEmptyDirectories(string $path, array $ignoreList = []): void
     {
 //        echo PHP_EOL;
         $dirIterator = new RecursiveIteratorIterator(
@@ -23,7 +26,17 @@ final class Filesystem implements FilesystemInterface
         /** @var SplFileInfo $directory */
         foreach ($dirIterator as $directory) {
 //            echo 'Found: ' . $directory->getPathname() . PHP_EOL;
-            if ($directory->isDir() && $this->isEmpty($directory->getPathname())) {
+            $ignore = false;
+
+            foreach ($ignoreList as $expression) {
+                if (preg_match($expression, $directory->getPathname())) {
+                    $ignore = true;
+
+                    break;
+                }
+            }
+
+            if (!$ignore && $directory->isDir() && $this->isEmpty($directory->getPathname())) {
 //                echo 'IS EMPTY!';
                 $this->removeDirectory($directory->getPathname());
             }

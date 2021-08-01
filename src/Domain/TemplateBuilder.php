@@ -23,7 +23,7 @@ final class TemplateBuilder implements TemplateBuilderInterface
      *
      * @throws JsonException
      */
-    public function build(NodeCollection $nodes, string $path, string $templatePath): void
+    public function build(Configuration $configuration, string $path, string $templatePath): void
     {
         if (!$this->filesystem->isDirectory($path)) {
             $this->filesystem->makeDirectory($path);
@@ -40,7 +40,7 @@ final class TemplateBuilder implements TemplateBuilderInterface
             if ($directory->isDir()) {
                 $this->filesystem->makeDirectory($fsName);
             } else {
-                $data = $twig->render($templateName, ['nodes' => $nodes->toArray()]);
+                $data = $twig->render($templateName, ['nodes' => $configuration->getNodes()->toArray()]);
 
                 if (trim($data)) {
                     if (str_contains($fsName, 'composer.json') && $this->filesystem->isFile($fsName)) {
@@ -56,6 +56,8 @@ final class TemplateBuilder implements TemplateBuilderInterface
             }
         }
 
-        $this->filesystem->removeEmptyDirectories($path);
+        if ($configuration->isRemoveEmptyDirectories()) {
+            $this->filesystem->removeEmptyDirectories($path, $configuration->getDirectoryIgnoreList());
+        }
     }
 }

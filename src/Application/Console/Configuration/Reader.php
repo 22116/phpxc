@@ -6,9 +6,10 @@ namespace LSBProject\PHPXC\Application\Console\Configuration;
 
 use JetBrains\PhpStorm\Pure;
 use LSBProject\PHPXC\Application\Console\Configuration\Strategy;
+use LSBProject\PHPXC\Domain\Configuration;
 use LSBProject\PHPXC\Domain\Configuration\Node;
 use LSBProject\PHPXC\Domain\Configuration\NodeInterface;
-use LSBProject\PHPXC\Domain\NodeCollection;
+use LSBProject\PHPXC\Domain\Configuration\NodeCollection;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -21,9 +22,13 @@ final class Reader
     /**
      * @param mixed[] $configuration
      */
-    public function read(array $configuration): NodeCollection
+    public function read(array $configuration): Configuration
     {
-        return $this->readNodes($configuration[Validator::NODES]);
+        return new Configuration(
+            nodes: $this->readNodes($configuration[Validator::NODES]),
+            removeEmptyDirectories: (bool) ($configuration[Validator::REMOVE_EMPTY_DIRECTORIES] ?? false),
+            directoryIgnoreList: $configuration[Validator::REMOVE_EMPTY_DIRECTORIES_IGNORE_LIST] ?? [],
+        );
     }
 
     /**

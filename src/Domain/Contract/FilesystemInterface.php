@@ -17,7 +17,7 @@ interface FilesystemInterface
     /**
      * @throws FilesystemException
      */
-    public function removeEmptyDirectories(string $path): void;
+    public function removeEmptyDirectories(string $path, array $ignoreList = []): void;
 
     /**
      * @throws FilesystemException

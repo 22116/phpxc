@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace LSBProject\PHPXC\Domain;
+namespace LSBProject\PHPXC\Domain\Configuration;
 
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use JetBrains\PhpStorm\Pure;
-use LSBProject\PHPXC\Domain\Configuration\NodeInterface;
 
 /**
  * @implements IteratorAggregate<int, NodeInterface>

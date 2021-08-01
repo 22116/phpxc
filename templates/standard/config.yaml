@@ -2,6 +2,7 @@ nodes:
     name:
         type: text
         description: 'Project name (example: lsbproject/my-new-project)'
+        regexp: '^[a-z0-9]([_.-]?[a-z0-9]+)*\/[a-z0-9](([_.]?|-{0,2})[a-z0-9]+)*$'
 
     description:
         type: text
@@ -36,6 +37,13 @@ nodes:
                     namespace:
                         type: text
                         description: 'Namespace name (example: LSBProject\\PHPXC\\)'
+                    containerization:
+                        type: choice
+                        description: 'Containerization'
+                        options:
+                            none: { description: 'None' }
+                            docker:
+                                description: 'Docker'
 
             web:
                 description: 'WEB'
@@ -89,7 +97,7 @@ nodes:
             cli:
                 description: 'CLI'
                 children:
-                    binary-name:
+                    binaryName:
                         type: text
                         description: 'Binary name'
                     ui:
@@ -99,6 +107,13 @@ nodes:
                             none: { description: 'None' }
                             webmozart: { description: 'WebMozart' }
                             symfony: { description: 'Symfony' }
+                    containerization:
+                        type: choice
+                        description: 'Containerization'
+                        options:
+                            none: { description: 'None' }
+                            docker:
+                                description: 'Docker'
 
     linter:
         type: multiple

@@ -10,12 +10,15 @@ use InvalidArgumentException;
 class Validator
 {
     public const NODES = 'nodes';
+    public const REMOVE_EMPTY_DIRECTORIES = 'removeEmptyDirectories';
+    public const REMOVE_EMPTY_DIRECTORIES_IGNORE_LIST = 'ignoreList';
 
     public const TYPE = 'type';
     public const TYPE_TEXT = 'text';
     public const TYPE_CHOICE = 'choice';
     public const TYPE_MULTIPLE = 'multiple';
 
+    public const REGEXP = 'regexp';
     public const DESCRIPTION = 'description';
     public const CHILDREN = 'children';
     public const OPTIONS = 'options';

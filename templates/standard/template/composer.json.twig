@@ -14,8 +14,8 @@
     {%- endif %}
 {% endif %}
 
-{% if nodes['type.cli.binary-name'] is defined %}
-    "bin": "bin/{{ nodes['type.cli.binary-name'].text }}",
+{% if nodes['type.cli'] is defined %}
+    "bin": "bin/{{ nodes['type.cli.binaryName'].text }}",
 {% endif %}
     "minimum-stability": "stable",
     "prefer-stable": true,

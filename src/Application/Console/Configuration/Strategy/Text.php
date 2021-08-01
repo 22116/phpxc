@@ -15,6 +15,8 @@ use Symfony\Component\Console\Question\Question;
 
 final class Text extends AbstractNodeParser
 {
+    private string $error = '';
+
     public function __construct(private InputInterface $input, private OutputInterface $output)
     {
     }
@@ -34,15 +36,26 @@ final class Text extends AbstractNodeParser
 
         $style->clear();
 
-        $question = new Question($node[Validator::DESCRIPTION]);
+        if ($this->error) {
+            $style->error($this->error);
+        }
 
-        yield new Configuration\TextNode(
-            text: (string) $style->askQuestion($question),
-            description: $node[Validator::DESCRIPTION],
-            preScripts: $this->readScripts($node[Validator::PRE_SCRIPTS] ?? []),
-            postScripts: $this->readScripts($node[Validator::POST_SCRIPTS] ?? []),
-            extra: $node[Validator::EXTRA] ?? [],
-        );
+        $question = new Question($node[Validator::DESCRIPTION]);
+        $text = (string) $style->askQuestion($question);
+
+        if (isset($node[Validator::REGEXP]) && !preg_match('/' . $node[Validator::REGEXP] . '/', $text)) {
+            $this->error = sprintf('"%s" regexp is not valid', $node[Validator::REGEXP]);
+
+            yield from $this->read($node);
+        } else {
+            yield new Configuration\TextNode(
+                text: $text,
+                description: $node[Validator::DESCRIPTION],
+                preScripts: $this->readScripts($node[Validator::PRE_SCRIPTS] ?? []),
+                postScripts: $this->readScripts($node[Validator::POST_SCRIPTS] ?? []),
+                extra: $node[Validator::EXTRA] ?? [],
+            );
+        }
     }
 
     public function supports(string $type): bool

@@ -1,3 +1,92 @@
-{%- if nodes['type.web.containerization.docker'] %}
-.PHONY:
+{% if nodes['type.web.containerization.docker'] is defined %}
+.PHONY: run stop rm composer-install composer-update bash-nginx bash-php phpunit phpstan
+
+DOCKER_PROJECT_NAME?={{ nodes['name'] }}
+COMPOSE_FILE?=docker/dev/docker-compose.yaml
+TEST_COMPOSE_FILE?=docker/test/docker-compose.yaml
+
+help:
+@echo ''
+@echo 'Usage:'
+@echo '  make [COMMAND]'
+@echo ''
+@echo 'Main application targets:'
+@echo '  run                                 Start all containers'
+@echo '  stop                                Stop all containers'
+@echo '  rm                                  Remove all containers'
+@echo '  pull                                Pull fresh images from registry'
+@echo '  ps                                  List running containers'
+@echo '  aio                                 Run rm pull composer-install run sequential'
+@echo ''
+@echo 'Composer targets:'
+@echo '  composer-install                    Install required composer packages'
+@echo '  composer-update                     Update required composer packages'
+{% if nodes['staticAnalyzer'] is defined %}
+@echo ''
+@echo 'Run static analysis:'
+{% endif %}
+{% if nodes['staticAnalyzer.phpstan'] is defined %}
+@echo '  phpstan                       		 Run analysis with phpstan'
+{% endif %}
+{% if nodes['staticAnalyzer.psalm'] is defined %}
+@echo '  psalm                       		 Run analysis with psalm'
+{% endif %}
+{% if nodes['testing'] is defined %}
+@echo ''
+@echo 'Run tests:'
+{% endif %}
+{% if nodes['testing.phpunit'] is defined %}
+@echo '  phpunit                       		 Run tests with phpunit'
+{% endif %}
+
+pull:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} pull
+
+run:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} up -d --build --remove-orphans
+
+stop:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} stop
+
+rm: stop
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} rm -f
+
+ps:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} ps
+
+composer-install:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} run --rm ${DOCKER_PROJECT_NAME} composer install
+
+composer-update:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} run --rm ${DOCKER_PROJECT_NAME} composer update
+
+bash-php:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} exec ${DOCKER_PROJECT_NAME} bash
+{% if nodes['linter'] is defined %}
+
+lint:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm lint
+
+lint-fix:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm lint.fix
+{% endif %}
+{% if nodes['testing.phpunit'] is defined %}
+
+phpunit:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm tests.phpunit
+{% endif %}
+{% if nodes['staticAnalyzer.phpstan'] is defined %}
+
+phpstan:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm analysis.phpstan
+{% endif %}
+{% if nodes['staticAnalyzer.phpstan'] is defined %}
+
+psalm:
+docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm analysis.psalm
+{% endif %}
+
+# Start environment like an all-in-one command
+aio: rm pull composer-install run
+
 {% endif %}

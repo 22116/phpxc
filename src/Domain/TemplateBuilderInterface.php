@@ -17,5 +17,5 @@ interface TemplateBuilderInterface
      * @throws SyntaxError
      * @throws FilesystemException
      */
-    public function build(NodeCollection $nodes, string $path, string $templatePath): void;
+    public function build(Configuration $configuration, string $path, string $templatePath): void;
 }

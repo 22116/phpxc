@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Domain;
 
+use LSBProject\PHPXC\Domain\Configuration\NodeCollection;
 use LSBProject\PHPXC\Domain\Configuration\NodeInterface;
 use LSBProject\PHPXC\Domain\Configuration\Script;
 use LSBProject\PHPXC\Domain\Contract\ShellExecutorInterface;
@@ -19,12 +20,12 @@ final class ShellTemplateBuilder implements TemplateBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build(NodeCollection $nodes, string $path, string $templatePath): void
+    public function build(Configuration $configuration, string $path, string $templatePath): void
     {
-        $this->executeScripts($nodes, $path);
-        $this->templateBuilder->build($nodes, $path, $templatePath);
+        $this->executeScripts($configuration->getNodes(), $path);
+        $this->templateBuilder->build($configuration, $path, $templatePath);
         chdir($path);
-        $this->executeScripts($nodes, $path, true);
+        $this->executeScripts($configuration->getNodes(), $path, true);
     }
 
     private function executeScripts(NodeCollection $collection, string $path, bool $post = false): void
