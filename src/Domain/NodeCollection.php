@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Domain;
 
-use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use JetBrains\PhpStorm\Pure;
 use LSBProject\PHPXC\Domain\Configuration\NodeInterface;
-use OutOfBoundsException;
 
 /**
  * @implements IteratorAggregate<int, NodeInterface>
  */
-final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
+final class NodeCollection implements IteratorAggregate, Countable
 {
     /**
      * @var array<string|int, NodeInterface>
@@ -40,50 +38,14 @@ final class NodeCollection implements IteratorAggregate, Countable, ArrayAccess
         return count($this->nodes);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param int|string $offset
-     */
-    public function offsetExists($offset): bool
-    {
-        return isset($this->nodes[$offset]);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param int $offset
-     */
-    public function offsetGet($offset): NodeInterface
-    {
-        return $this->offsetExists($offset) ? $this->nodes[$offset] : throw new OutOfBoundsException();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param int $offset
-     * @param NodeInterface $value
-     */
-    public function offsetSet($offset, $value): void
-    {
-        $this->nodes[$offset] = $value;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param int $offset
-     */
-    public function offsetUnset($offset): void
-    {
-        unset($this->nodes[$offset]);
-    }
-
     public function set(string $key, NodeInterface $node): void
     {
         $this->nodes[$key] = $node;
+    }
+
+    public function has(string $key): bool
+    {
+        return isset($this->nodes[$key]);
     }
 
     #[Pure]

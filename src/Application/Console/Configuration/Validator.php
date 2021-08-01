@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 class Validator
 {
-    public const ROOT_NODE = 'nodes';
+    public const NODES = 'nodes';
 
     public const TYPE = 'type';
     public const TYPE_TEXT = 'text';
@@ -36,6 +36,22 @@ class Validator
      * @throws Exception
      */
     public function validate(array $configuration): void
+    {
+        if (!isset($configuration[self::NODES]) || !is_array($configuration[self::NODES])) {
+            throw new InvalidArgumentException(
+                sprintf('"%s" must be with type "array"', self::NODES)
+            );
+        }
+
+        $this->validateNodes($configuration[self::NODES]);
+    }
+
+    /**
+     * @param mixed[] $configuration
+     *
+     * @throws Exception
+     */
+    public function validateNodes(array $configuration): void
     {
         foreach ($configuration as $key => $item) {
             if (!isset($item[self::DESCRIPTION]) || !is_string($item[self::DESCRIPTION])) {
@@ -78,13 +94,13 @@ class Validator
                     }
 
                     if (isset($option[self::CHILDREN])) {
-                        self::validate($option[self::CHILDREN]);
+                        self::validateNodes($option[self::CHILDREN]);
                     }
                 }
             }
 
             if (isset($item[self::CHILDREN])) {
-                self::validate($item[self::CHILDREN]);
+                self::validateNodes($item[self::CHILDREN]);
             }
         }
     }

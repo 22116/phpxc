@@ -46,13 +46,13 @@ final class ShellTemplateBuilder implements TemplateBuilderInterface
     private function isScriptAllowed(NodeCollection $collection, Script $script): bool
     {
         foreach ($script->getIncludes() as $include) {
-            if (!$collection->offsetExists($include)) {
+            if (!$collection->has($include)) {
                 return false;
             }
         }
 
         foreach ($script->getExcludes() as $exclude) {
-            if ($collection->offsetExists($exclude)) {
+            if ($collection->has($exclude)) {
                 return false;
             }
         }

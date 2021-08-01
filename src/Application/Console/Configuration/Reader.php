@@ -26,31 +26,29 @@ final class Reader
         $prefix = $prefix ? "$prefix." : '';
         $collection = new NodeCollection();
 
-        foreach ($configuration as $key => $item) {
+        foreach ($configuration[Validator::NODES] as $key => $item) {
             foreach ($this->getReaders() as $reader) {
                 if ($reader->supports($item['type'] ?? '')) {
                     $nodes = $reader->read($item);
 
                     /** @var NodeInterface $node */
                     foreach ($nodes as $node) {
-                        if ($node->getParentName()) {
-                            $nodeName = $node->getParentName() ? ("." . $node->getParentName()) : '';
-                            $nodeKey = $prefix . $key . $nodeName;
+                        $nodeName = $node->getParentName() ? ("." . $node->getParentName()) : '';
 
-                            $collection->set($nodeKey, new Node(
+                        if ($node->getParentName()) {
+                            $collection->set($prefix . $key . $nodeName, new Node(
                                 description: $node->getDescription(),
                                 extra: $node->getExtra(),
                             ));
                         }
 
-                        $nodeKey = $prefix . $key;
-                        $collection->set($nodeKey, $node);
+                        $collection->set($prefix . $key, $node);
 
                         if (isset($item['options'][$node->getParentName()]['children'])) {
                             $collection = $collection->merge(
                                 $this->read(
                                     $item['options'][$node->getParentName()]['children'],
-                                    $nodeKey
+                                    $prefix . $key . $nodeName
                                 )
                             );
                         }

@@ -2,8 +2,21 @@
     "name": "{{ nodes['name'].text }}",
     "description": "{{ nodes['description'].text }}",
     "version": "1.0.0",
+{% if nodes['type.cli'] is defined %}
     "type": "cli",
-    "bin": "bin/phpxc",
+{% elseif nodes['type.web'] is defined %}
+    "type": "application",
+{% elseif nodes['type.library'] is defined %}
+    {%- if nodes['type.library.type.symfonyBundle'] is defined %}
+    "type": "symfony-bundle",
+    {%- else %}
+    "type": "library",
+    {%- endif %}
+{% endif %}
+
+{% if nodes['type.cli.binary-name'] is defined %}
+    "bin": "bin/{{ nodes['type.cli.binary-name'].text }}",
+{% endif %}
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -13,13 +26,43 @@
         "roave/security-advisories": "dev-latest"
     },
     "scripts": {
+{% if nodes['linter.phpcs'] is defined %}
         "lint": "phpcs",
         "lint:fix": "phpcbf",
-        "analyze": "phpstan analyse src"
+{% endif %}
+{% if nodes['staticAnalyzer'] is defined %}
+    {%- if nodes['staticAnalyzer.phpstan'] is defined %}
+        "phpstan": "phpstan analyse",
+    {%- endif %}
+
+    {%- if nodes['staticAnalyzer.psalm'] is defined %}
+
+        "psalm": "psalm src",
+    {%- endif %}
+
+        "analyze": [
+    {%- if nodes['staticAnalyzer.phpstan'] is defined and nodes['staticAnalyzer.psalm'] is defined %}
+
+            "@phpstan",
+            "@psalm"
+    {%- elseif nodes['staticAnalyzer.phpstan'] is defined %}
+
+            "@phpstan"
+    {%- elseif nodes['staticAnalyzer.psalm'] is defined %}
+
+            "@psalm"
+    {%- endif %}
+
+        ]
+{% endif %}
     },
     "autoload": {
         "psr-4": {
+{% if nodes['type.library.namespace'] is defined %}
+            "{{ nodes['type.library.namespace'].text }}": "src/"
+{% else %}
             "App\\": "src/"
+{% endif %}
         }
     }
 }
