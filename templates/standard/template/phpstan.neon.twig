@@ -1,0 +1,14 @@
+{% if nodes['staticAnalyzer.phpstan'] is defined %}
+includes:
+  - vendor/timeweb/phpstan-enum/extension.neon
+
+parameters:
+    paths:
+        - src
+
+    level: 8
+    tmpDir: "%rootDir%/../../../phpstan"
+
+    checkGenericClassInNonGenericObjectType: false
+
+{% endif %}

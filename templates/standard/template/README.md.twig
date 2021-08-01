@@ -1,0 +1,16 @@
+# {{ nodes['name'].text }}
+
+## Requirements
+
+## Installation
+
+Open terminal and execute next line:
+
+```shell
+composer global require {{ nodes['name'].text }}
+{% if nodes['type.cli'] is defined %}
+{{ nodes['type.cli.namespace'].text }}
+{% endif %}
+```
+
+## Quick Start

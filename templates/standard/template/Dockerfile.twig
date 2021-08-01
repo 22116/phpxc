@@ -1,0 +1,30 @@
+{% if nodes['type.cli.containerization.docker'] is defined or nodes['type.library.containerization.docker'] is defined %}
+FROM composer:latest as composer
+
+WORKDIR /home/app
+
+COPY ./composer.json /home/app
+COPY ./composer.lock /home/app
+
+RUN composer install \
+    --ignore-platform-reqs \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts \
+    --no-dev
+
+FROM php:{{ nodes['phpVersion'].description }}-cli-alpine
+
+WORKDIR /home/app
+
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer /home/app/vendor /home/app/vendor
+COPY . /home/app
+
+RUN composer install --no-interaction --no-dev
+
+{% if nodes['type.cli'] is defined %}
+ENTRYPOINT ["php", "bin/{{ nodes['type.cli.binaryName'].text }}"]
+{% endif %}
+
+{% endif %}

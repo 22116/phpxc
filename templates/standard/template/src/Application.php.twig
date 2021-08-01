@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+{% if nodes['type.cli'] is defined %}
+namespace {{ nodes['type.cli.namespace'].text }};
+{% else %}
+namespace App;
+{% endif %}
+
+final class Application
+{
+}

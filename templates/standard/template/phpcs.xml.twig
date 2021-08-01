@@ -1,0 +1,31 @@
+{% if nodes['linter.phpcs'] is defined %}
+<?xml version="1.0"?>
+<ruleset name="App">
+    <file>src</file>
+{% if nodes['testing'] is defined %}
+    <file>tests</file>
+{% endif %}
+
+{% if nodes['linter.phpcs.rules.lsbproject'] is defined %}
+    <config name="installed_paths" value="vendor/lsbproject/php-clean-code-rules" />
+{% elseif nodes['linter.phpcs.rules.symfony'] %}
+    <config name="installed_paths" value="vendor/escapestudios/symfony2-coding-standard" />
+{% endif %}
+
+{% if nodes['linter.phpcs.rules.lsbproject'] is not defined %}
+    <rule ref="PSR1"/>
+{% endif %}
+{% if nodes['linter.phpcs.rules.psr-2'] is defined and nodes['linter.phpcs.rules.lsbproject'] is not defined %}
+    <rule ref="PSR2"/>
+{% endif %}
+{% if nodes['linter.phpcs.rules.psr-12'] is defined and nodes['linter.phpcs.rules.lsbproject'] is not defined %}
+    <rule ref="PSR12"/>
+{% endif %}
+{% if nodes['linter.phpcs.rules.symfony'] is defined and nodes['linter.phpcs.rules.lsbproject'] is not defined %}
+    <rule ref="Symfony" />
+{% endif %}
+{% if nodes['linter.phpcs.rules.lsbproject'] is defined %}
+    <rule ref="LSBProject" />
+{% endif %}
+</ruleset>
+{% endif %}

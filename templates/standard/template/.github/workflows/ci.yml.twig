@@ -1,0 +1,28 @@
+{% if nodes['ci.github'] is defined %}
+name: CI
+on: [push, pull_request]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@master
+
+        - name: Setup PHP
+          uses: shivammathur/setup-php@v2
+          with:
+              php-version: '{{ nodes['phpVersion'].description }}'
+              tools: composer
+
+        - name: Install dependencies
+          run: composer install
+
+{% if nodes['linter'] is defined %}
+        - name: Run linter
+          run: composer run lint
+{% endif %}
+
+{% if nodes['staticAnalyzer'] is defined %}
+        - name: Run analyzer
+          run: composer run analyze
+{% endif %}
+{% endif %}
