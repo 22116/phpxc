@@ -1,5 +1,5 @@
 {% if nodes['type.web.containerization.docker'] %}
-FROM {{ nodes['name'] }}
+FROM {{ nodes['name'].text }}
 
 RUN pecl install xdebug
 

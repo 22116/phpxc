@@ -1,4 +1,4 @@
-{% if nodes['type.cli.containerization.docker'] or nodes['type.library.containerization.docker'] %}
+{% if nodes['type.web.containerization.docker'] %}
 FROM composer:latest as composer
 
 WORKDIR /home/app
@@ -13,7 +13,7 @@ RUN composer install \
     --no-scripts \
     --no-dev
 
-FROM php:{{ nodes['phpVersion'].description }}-cli-alpine
+FROM php:{{ nodes['phpVersion'].description }}-fpm-alpine
 
 WORKDIR /home/app
 
@@ -22,9 +22,4 @@ COPY --from=composer /home/app/vendor /home/app/vendor
 COPY . /home/app
 
 RUN composer install --no-interaction --no-dev
-
-{% if nodes['type.cli'] %}
-ENTRYPOINT ["php", "bin/{{ nodes['type.cli.binaryName'].text }}"]
-{% endif %}
-
 {% endif %}

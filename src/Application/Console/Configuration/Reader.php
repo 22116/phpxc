@@ -27,7 +27,9 @@ final class Reader
         return new Configuration(
             nodes: $this->readNodes($configuration[Validator::NODES]),
             removeEmptyDirectories: (bool) ($configuration[Validator::REMOVE_EMPTY_DIRECTORIES] ?? false),
-            directoryIgnoreList: $configuration[Validator::REMOVE_EMPTY_DIRECTORIES_IGNORE_LIST] ?? [],
+            directoryIgnoreList:
+                $configuration[Validator::REMOVE_EMPTY_DIRECTORIES][Validator::REMOVE_EMPTY_DIRECTORIES_IGNORE_LIST]
+                    ?? [],
         );
     }
 

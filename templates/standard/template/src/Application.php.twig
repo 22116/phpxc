@@ -1,3 +1,4 @@
+{% if not nodes['type.web.framework.symfony'] %}
 <?php
 
 declare(strict_types=1);
@@ -11,3 +12,5 @@ namespace App;
 final class Application
 {
 }
+
+{% endif %}

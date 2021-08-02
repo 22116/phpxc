@@ -70,7 +70,7 @@ final class TemplateBuilder implements TemplateBuilderInterface
             } else {
                 $data = $this->templateEngine->renderFile($originTemplateName, $templateData);
 
-                if (trim($data)) {
+                if (trim($data) || str_contains($templateName, '.gitignore')) {
                     if (str_contains($fsName, 'composer.json') && $this->filesystem->isFile($fsName)) {
                         $data = DataStructure::mergeJson(
                             $this->filesystem->readFile($fsName),

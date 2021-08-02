@@ -28,7 +28,7 @@ final class Filesystem implements FilesystemInterface
             $ignore = false;
 
             foreach ($ignoreList as $expression) {
-                if (preg_match($expression, $directory->getPathname())) {
+                if (preg_match('/' . $expression . '/', $directory->getPathname())) {
                     $ignore = true;
 
                     break;
