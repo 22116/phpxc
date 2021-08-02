@@ -12,7 +12,7 @@ Highly inspired of [TSDX](https://tsdx.io/)
 
 ## Requirements
 
-* Linux (as console rendering depends on `stty` tool)
+* UNIX (as console rendering depends on `stty` tool)
 * PHP 8.0 + yarn extension
 
 ## Installation
