@@ -22,4 +22,6 @@ COPY --from=composer /home/app/vendor /home/app/vendor
 COPY . /home/app
 
 RUN composer install --no-interaction --no-dev
+
+EXPOSE 80
 {% endif %}

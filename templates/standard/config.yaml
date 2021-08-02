@@ -71,28 +71,12 @@ nodes:
                                         options:
                                             embedded: { description: 'Embedded' }
                                             nginx: { description: 'Nginx' }
-                                            apache: { description: 'Apache' }
                                     storage:
                                         type: multiple
                                         description: 'Storages'
                                         options:
-                                            mysql: { description: 'MySql' }
-                                            mariadb: { description: 'MariaDB' }
-                                            clickhouse: { description: 'ClickHouse' }
-                                            postgresql: { description: 'PostgreSQL' }
-                                            mongodb: { description: 'MongoDB' }
-                                    cache:
-                                        type: multiple
-                                        description: 'Cache'
-                                        options:
-                                            redis: { description: 'Redis' }
-                                            memcached: { description: 'Memcached' }
-                                    message-broker:
-                                        type: multiple
-                                        description: 'Message brokers'
-                                        options:
-                                            kafka: { description: 'Kafka' }
-                                            rabbitmq: { description: 'RabbitMQ' }
+                                            mysql: { description: 'MySql', extra: { image: 'mariadb' } }
+                                            mariadb: { description: 'MariaDB', extra: { image: 'mariadb' } }
 
             cli:
                 description: 'CLI'
