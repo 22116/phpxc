@@ -1,4 +1,6 @@
+{% if nodes['type.web.containerization.docker'] %}
 version: '3.8'
 services:
     php:
         image: php
+{% endif %}
