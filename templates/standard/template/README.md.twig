@@ -7,9 +7,11 @@
 Open terminal and execute next line:
 
 ```shell
-composer global require {{ nodes['name'].text }}
 {% if nodes['type.cli'] %}
+composer global require {{ nodes['name'].text }}
 {{ nodes['type.cli.namespace'].text }}
+{% else %}
+composer install
 {% endif %}
 ```
 

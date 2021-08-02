@@ -18,14 +18,13 @@ final class Filesystem implements FilesystemInterface
      */
     public function removeEmptyDirectories(string $path, array $ignoreList = []): void
     {
-//        echo PHP_EOL;
         $dirIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)
+            new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
         );
 
         /** @var SplFileInfo $directory */
         foreach ($dirIterator as $directory) {
-//            echo 'Found: ' . $directory->getPathname() . PHP_EOL;
             $ignore = false;
 
             foreach ($ignoreList as $expression) {
@@ -37,7 +36,6 @@ final class Filesystem implements FilesystemInterface
             }
 
             if (!$ignore && $directory->isDir() && $this->isEmpty($directory->getPathname())) {
-//                echo 'IS EMPTY!';
                 $this->removeDirectory($directory->getPathname());
             }
         }
@@ -74,7 +72,10 @@ final class Filesystem implements FilesystemInterface
      */
     public function iterateDirectories(string $path): iterable
     {
-        return new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+        return new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
     }
 
     public function readFile(string $path): string
@@ -103,7 +104,8 @@ final class Filesystem implements FilesystemInterface
     private function isEmpty(string $path): bool
     {
         $dirIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)
+            new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
         );
 
         /** @var SplFileInfo $directory */
