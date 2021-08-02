@@ -2,5 +2,7 @@
 version: '3.8'
 services:
     php:
-        image: php
+        build: .
+        volumes:
+            - ../..:/home/app
 {% endif %}

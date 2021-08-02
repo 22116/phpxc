@@ -10,6 +10,11 @@ PHPXC is a CLI that helps you manage all that stuff.
 
 Highly inspired of [TSDX](https://tsdx.io/)
 
+## Requirements
+
+* Linux (as console rendering depends on `stty` tool)
+* PHP 8.0 + yarn extension
+
 ## Installation
 
 ```shell

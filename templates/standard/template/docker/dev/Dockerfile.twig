@@ -1,4 +1,6 @@
 {% if nodes['type.web.containerization.docker'] %}
-FROM php
+FROM {{ nodes['name'] }}
+
+RUN pecl install xdebug
 
 {% endif %}
