@@ -20,7 +20,3 @@ Highly inspired of [TSDX](https://tsdx.io/)
 ```shell
 composer global require lsbproject/phpxc
 ```
-
-## Quick Start
-
-// TODO
