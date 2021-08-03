@@ -13,10 +13,10 @@ jobs:
               tools: composer
 
         - name: Install dependencies
-          uses: php-actions/composer@v5
-
-        - name: Run PHPSTAN
-          uses: php-actions/phpstan@v2
+          run: composer install && composer require --dev lsbproject/php-clean-code-rules
 
         - name: Run linter
           run: composer run lint
+
+        - name: Run analyzer
+          run: composer run analyzer

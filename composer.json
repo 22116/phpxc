@@ -26,9 +26,7 @@
         "lsbproject/symfony-console-style": "^1.0"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
-        "lsbproject/php-clean-code-rules": "^2.0",
-        "phpstan/phpstan": "^0.12.93"
+        "roave/security-advisories": "dev-latest"
     },
     "scripts": {
         "lint": "phpcs",
