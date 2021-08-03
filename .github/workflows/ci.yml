@@ -13,10 +13,10 @@ jobs:
               tools: composer
 
         - name: Install dependencies
-          run: composer install
+          uses: php-actions/composer@v5
+
+        - name: Run PHPSTAN
+          uses: php-actions/phpstan@v2
 
         - name: Run linter
           run: composer run lint
-
-        - name: Run analyzer
-          run: composer run analyze
