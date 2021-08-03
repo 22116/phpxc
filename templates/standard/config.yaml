@@ -155,8 +155,6 @@ nodes:
         description: 'Continuous Integration'
         options:
             github: { description: 'GitHub Actions' }
-            gitlab: { description: 'GitLab CI' }
-            travis: { description: 'Travis CI' }
 
 removeEmptyDirectories:
     ignoreList:

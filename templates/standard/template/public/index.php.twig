@@ -1,0 +1,13 @@
+{% if nodes['type.web'] and nodes['type.web.framework.none'] %}
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use App\Application;
+
+$application = new Application();
+$application->run();
+
+{% endif %}

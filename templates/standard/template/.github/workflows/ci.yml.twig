@@ -7,6 +7,7 @@ jobs:
         steps:
         - uses: actions/checkout@master
 
+{% if not nodes['type.web.containerization.docker'] %}
         - name: Setup PHP
           uses: shivammathur/setup-php@v2
           with:
@@ -15,14 +16,23 @@ jobs:
 
         - name: Install dependencies
           run: composer install
-{% if nodes['linter'] %}
 
+{% endif %}
+{% if nodes['linter'] %}
         - name: Run linter
+{% if nodes['type.web.containerization.docker'] %}
+          run: make lint
+{% else %}
           run: composer run lint
 {% endif %}
-{% if nodes['staticAnalyzer'] %}
 
+{% endif %}
+{% if nodes['staticAnalyzer'] %}
         - name: Run analyzer
+{% if nodes['type.web.containerization.docker'] %}
+          run: make analyze
+{% else %}
           run: composer run analyze
+{% endif %}
 {% endif %}
 {% endif %}

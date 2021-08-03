@@ -9,7 +9,7 @@ services:
 
 {% if nodes['type.web.containerization.docker.storage.mysql'] %}
     mysql:
-        image: {{ nodes['type.web.containerization.docker.storage.mysql'].extra['image'] }}
+        image: {{ nodes['type.web.containerization.docker.storage.mysql'].extra.image }}
         command: --default-authentication-plugin=mysql_native_password
         restart: always
         ports:
@@ -21,7 +21,7 @@ services:
 {% endif %}
 {% if nodes['type.web.containerization.docker.storage.mariadb'] %}
     mariadb:
-        image: {{ nodes['type.web.containerization.docker.storage.mariadb'].extra['image'] }}
+        image: {{ nodes['type.web.containerization.docker.storage.mariadb'].extra.image }}
         command: --default-authentication-plugin=mysql_native_password
         restart: always
         ports:
