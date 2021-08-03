@@ -22,7 +22,7 @@ $containerBuilder = new ContainerBuilder();
 $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
 $loader->load(__DIR__ . '/../config/services.yaml');
 
-$application = new Application($composer->getDescription(), $composer->getVersion());
+$application = new Application($composer->getDescription(), "v1.0");
 $application->add($containerBuilder->get(Command\Create::class));
 $application->add($containerBuilder->get(Command\Config\Show::class));
 $application->add($containerBuilder->get(Command\Config\Validate::class));
