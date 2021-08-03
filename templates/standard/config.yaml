@@ -21,6 +21,11 @@ nodes:
                 postScripts:
                     - 'composer require jetbrains/phpstorm-attributes'
 
+    namespace:
+        type: text
+        description: 'Namespace name (example: LSBProject\\PHPXC\\)'
+        regexp: '^((([A-Z]+[a-z0-9]*)((\d)|([A-Z0-9][a-z0-9]*))*([A-Z])?)\\\\)+$'
+
     type:
         type: choice
         description: 'Application type'
@@ -34,9 +39,6 @@ nodes:
                         options:
                             none: { description: 'None' }
                             symfonyBundle: { description: 'Symfony Bundle' }
-                    namespace:
-                        type: text
-                        description: 'Namespace name (example: LSBProject\\PHPXC\\)'
                     containerization:
                         type: choice
                         description: 'Containerization'
@@ -56,7 +58,7 @@ nodes:
                             symfony:
                                 description: 'Symfony'
                                 preScripts:
-                                    - 'composer create-project symfony/skeleton {PATH}'
+                                    - 'composer create-project symfony/website-skeleton {PATH}'
                     containerization:
                         type: choice
                         description: 'Containerization'
@@ -69,12 +71,12 @@ nodes:
                                         type: choice
                                         description: 'Server'
                                         options:
-                                            embedded: { description: 'Embedded' }
                                             nginx: { description: 'Nginx' }
                                     storage:
-                                        type: multiple
+                                        type: choice
                                         description: 'Storages'
                                         options:
+                                            none: { description: 'None' }
                                             mysql: { description: 'MySql', extra: { image: 'mariadb' } }
                                             mariadb: { description: 'MariaDB', extra: { image: 'mariadb' } }
 
@@ -89,8 +91,11 @@ nodes:
                         description: 'UI engine'
                         options:
                             none: { description: 'None' }
-                            webmozart: { description: 'WebMozart' }
-                            symfony: { description: 'Symfony' }
+                            symfonyConsole:
+                                description: 'Symfony Console component'
+                                postScripts:
+                                    - 'composer require symfony/console'
+                                    - 'composer require mcstreetguy/composer-parser'
                     containerization:
                         type: choice
                         description: 'Containerization'
@@ -136,6 +141,7 @@ nodes:
                 description: 'Psalm'
                 postScripts:
                     - 'composer require --dev vimeo/psalm'
+                    - 'vendor/bin/psalm --init'
 
     testing:
         type: multiple

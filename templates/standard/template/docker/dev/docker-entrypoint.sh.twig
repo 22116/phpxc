@@ -1,10 +1,13 @@
+{% if nodes['type.web.containerization.docker'] %}
 #!/usr/bin/env sh
 
 {% if nodes['type.web.containerization.docker.storage.mysql'] %}
 wait-for-it mysql:3306
+
 {% endif %}
 {% if nodes['type.web.containerization.docker.storage.mariadb'] %}
 wait-for-it mariadb:3306
-{% endif %}
 
+{% endif %}
 php-fpm
+{% endif %}

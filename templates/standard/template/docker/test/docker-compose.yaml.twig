@@ -22,8 +22,6 @@ services:
         working_dir: /home/www
         volumes:
             - ../../:/home/www:delegated
-        depends_on:
-            - master.mysql.intra
         command: composer run test
 
 {% endif %}

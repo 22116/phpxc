@@ -33,7 +33,7 @@ final class DataStructure
             JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
         );
 
-        $data = self::mergeRecursivelyPreserveKeys($source, $target);
+        $data = array_replace_recursive($source, $target);
 
         uksort($data, static function (string $a, string $b) use ($orders) {
             $values = array_flip($orders);
@@ -57,28 +57,5 @@ final class DataStructure
             $data,
             JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
         );
-    }
-
-    /**
-     * @param mixed[] $a
-     * @param mixed[] $b
-     *
-     * @return mixed[]
-     */
-    public static function mergeRecursivelyPreserveKeys(array $a, array $b): array
-    {
-        foreach ($b as $bKey => $bValue) {
-            if (is_numeric($bKey)) {
-                $a[] = !is_array($bValue) || !isset($a[$bKey])
-                    ? $bValue
-                    : self::mergeRecursivelyPreserveKeys($a[$bKey], $bValue);
-            } else {
-                $a[$bKey] = !is_array($bValue) || !isset($a[$bKey])
-                    ? $bValue
-                    : self::mergeRecursivelyPreserveKeys($a[$bKey], $bValue);
-            }
-        }
-
-        return array_intersect_key($a, array_unique(array_map('serialize', $a)));
     }
 }

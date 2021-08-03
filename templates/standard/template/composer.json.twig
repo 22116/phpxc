@@ -16,8 +16,6 @@
 {% if nodes['type.cli'] %}
     "bin": "bin/{{ nodes['type.cli.binaryName'].text }}",
 {% endif %}
-    "minimum-stability": "stable",
-    "prefer-stable": true,
     "require": {
         "php": ">={{ nodes['phpVersion'].description }}"
     },
@@ -33,14 +31,13 @@
     {%- if nodes['testing.behat'] %}
         "behat": "behat",
     {% endif %}
-
     {%- if nodes['testing.phpunit'] %}
 
         "phpunit": "phpunit",
     {%- endif %}
 
         "test": [
-    {%- if nodes['testing.phpunit']  and nodes['testing.behat'] %}
+    {%- if nodes['testing.phpunit'] and nodes['testing.behat'] %}
 
             "@phpunit",
             "@behat"
@@ -61,11 +58,11 @@
 
     {%- if nodes['staticAnalyzer.psalm'] %}
 
-        "psalm": "psalm src",
+        "psalm": "psalm -c psalm.xml src",
     {%- endif %}
 
         "analyze": [
-    {%- if nodes['staticAnalyzer.phpstan']  and nodes['staticAnalyzer.psalm'] %}
+    {%- if nodes['staticAnalyzer.phpstan'] and nodes['staticAnalyzer.psalm'] %}
 
             "@phpstan",
             "@psalm"
@@ -82,11 +79,16 @@
     },
     "autoload": {
         "psr-4": {
-{% if nodes['type.library.namespace'] %}
-            "{{ nodes['type.library.namespace'].text }}": "src/"
-{% else %}
-            "App\\": "src/"
-{% endif %}
+            "{{ nodes['namespace'].text }}": "src/"
         }
-    }
+    },
+{% if nodes['testing'] %}
+    "autoload-dev": {
+        "psr-4": {
+            "{{ nodes['namespace'].text }}Tests\\": "tests/"
+        }
+    },
+{% endif %}
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

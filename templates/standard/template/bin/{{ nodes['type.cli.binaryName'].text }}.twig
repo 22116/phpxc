@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+{% if nodes['type.cli.ui.symfonyConsole'] %}
+use Symfony\Component\Console\Application;
+use MCStreetguy\ComposerParser\Factory as ComposerParser;
+
+$composer = ComposerParser::parse(__DIR__ . '/../composer.json');
+$application = new Application($composer->getDescription(), $composer->getVersion());
+$application->run();
+{% else %}
+use {{ nodes['namespace'].text | namespace }}\Application;
+
+$application = new Application();
+$application->run();
+{% endif %}

@@ -1,5 +1,9 @@
 {% if nodes['type.web.containerization.docker'] %}
-.PHONY: build run stop rm composer-install composer-update bash-nginx bash-php phpunit phpstan
+.PHONY: build run pull stop rm ps composer-install composer-update bash-php{% if nodes['type.web.containerization.docker'] %}
+ lint lint-fix
+{%- endif %}{% if nodes['type.web.containerization.docker'] %}
+ analyze
+{%- endif %} aio
 
 DOCKER_PROJECT_NAME?={{ nodes['name'].text }}
 DOCKERFILE?=docker/prod/Dockerfile
@@ -42,6 +46,7 @@ help:
 
 build:
 	docker build -t {{ nodes['name'].text }} -f ${DOCKERFILE} --no-cache .
+	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} build --no-cache
 
 pull:
 	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} pull
@@ -59,13 +64,13 @@ ps:
 	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} ps
 
 composer-install:
-	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} run --rm ${DOCKER_PROJECT_NAME} composer install
+	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} run --rm --entrypoint="/bin/bash -l -c" app "composer install"
 
 composer-update:
-	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} run --rm ${DOCKER_PROJECT_NAME} composer update
+	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} run --rm --entrypoint="/bin/bash -l -c" app "composer update"
 
 bash-php:
-	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} exec ${DOCKER_PROJECT_NAME} bash
+	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${COMPOSE_FILE} exec app bash
 {% if nodes['linter'] %}
 
 lint:

@@ -7,6 +7,7 @@ namespace LSBProject\PHPXC\Infrastructure;
 use LSBProject\PHPXC\Constant;
 use LSBProject\PHPXC\Domain\Contract\TemplateEngineInterface;
 use LSBProject\PHPXC\Domain\Exception\FilesystemException;
+use LSBProject\PHPXC\Infrastructure\TwigExtension\NamespaceExtension;
 use RuntimeException;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -20,12 +21,13 @@ class TwigTemplateEngine implements TemplateEngineInterface
 
     public function __construct()
     {
-        $this->twig = new Environment(new FilesystemLoader(Constant::TEMPLATES_PATH));
+        $this->loadTemplates(Constant::TEMPLATES_PATH);
     }
 
     public function loadTemplates(string $path): void
     {
         $this->twig = new Environment(new FilesystemLoader($path));
+        $this->twig->addExtension(new NamespaceExtension());
     }
 
     /**

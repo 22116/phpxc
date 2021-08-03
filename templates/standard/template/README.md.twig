@@ -15,4 +15,16 @@ composer install
 {% endif %}
 ```
 
+{% if nodes['type.cli'] %}
 ## Quick Start
+
+* Open terminal and execute next line:
+```
+make build
+make run
+```
+{% if nodes['type.web.containerization.docker.server'] %}
+* Open localhost:8000
+{% endif %}
+
+{% endif %}

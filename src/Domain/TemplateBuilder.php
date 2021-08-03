@@ -59,7 +59,7 @@ final class TemplateBuilder implements TemplateBuilderInterface
             $originTemplateName = str_replace($templatePath, '', $directory->getPathname());
             $templateName = $this->templateEngine->render($originTemplateName, $templateData);
 
-            if ('/' === substr($templateName, -1)) {
+            if ('/' === substr(str_replace('.twig', '', $templateName), -1)) {
                 continue;
             }
 

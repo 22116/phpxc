@@ -7,7 +7,11 @@ jobs:
         steps:
         - uses: actions/checkout@master
 
-{% if not nodes['type.web.containerization.docker'] %}
+{% if nodes['type.web.containerization.docker'] %}
+        - name: Build
+          run: make build
+
+{% else %}
         - name: Setup PHP
           uses: shivammathur/setup-php@v2
           with:

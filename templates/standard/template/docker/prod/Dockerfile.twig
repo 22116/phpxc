@@ -21,7 +21,7 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=composer /home/app/vendor /home/app/vendor
 COPY . /home/app
 
-RUN composer install --no-interaction --no-dev
+RUN composer install --no-interaction --no-scripts --no-dev
 
 EXPOSE 80
 {% endif %}
