@@ -29,13 +29,37 @@
         "lint": "phpcs",
         "lint:fix": "phpcbf",
 {% endif %}
+{% if nodes['testing'] %}
+    {%- if nodes['testing.behat'] %}
+        "behat": "behat",
+    {% endif %}
+
+    {%- if nodes['testing.phpunit'] %}
+
+        "phpunit": "phpunit",
+    {%- endif %}
+
+        "test": [
+    {%- if nodes['testing.phpunit']  and nodes['testing.behat'] %}
+
+            "@phpunit",
+            "@behat"
+    {%- elseif nodes['testing.phpunit'] %}
+
+            "@phpunit"
+    {%- elseif nodes['testing.behat'] %}
+
+            "@behat"
+    {%- endif %}
+
+        ],
+{% endif %}
 {% if nodes['staticAnalyzer'] %}
     {%- if nodes['staticAnalyzer.phpstan'] %}
         "phpstan": "phpstan analyse",
     {%- endif %}
 
     {%- if nodes['staticAnalyzer.psalm'] %}
-
         "psalm": "psalm src",
     {%- endif %}
 

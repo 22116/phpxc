@@ -1,6 +1,14 @@
 {% if nodes['type.web.containerization.docker'] %}
 FROM {{ nodes['name'].text }}
 
+COPY docker/dev/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
+{% if nodes['type.web.containerization.docker.storage'] %}
+
+COPY docker/dev/wait-for-it.sh /usr/local/bin/wait-for-it
+RUN chmod +x /usr/local/bin/wait-for-it
+{% endif %}
+
 RUN apk --update --no-cache add autoconf g++ make && \
     pecl install -f xdebug && \
     docker-php-ext-enable xdebug && \
@@ -20,4 +28,5 @@ RUN echo "memory_limit=-1" >> /usr/local/etc/php/php.ini && \
     echo "xdebug.profiler_enable = 0" >> ${XDEBUG_PATH} && \
     echo "xdebug.remote_host = ${XDEBUG_HOST}" >> ${XDEBUG_PATH}
 
+ENTRYPOINT docker-entrypoint
 {% endif %}

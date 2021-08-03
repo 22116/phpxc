@@ -1,0 +1,39 @@
+{% if nodes['type.web.containerization.docker'] and (nodes['linter'] or nodes['testing'] or nodes['staticAnalyzer']) %}
+version: '3'
+services:
+{% if nodes['linter'] %}
+    lint:
+        image: {{ nodes['name'].text }}
+        working_dir: /home/www
+        volumes:
+            - ../../:/home/www:delegated
+        command: composer run lint
+
+    lint.fix:
+        image: {{ nodes['name'].text }}
+        working_dir: /home/www
+        volumes:
+            - ../../:/home/www:delegated
+        command: composer run lint-fix
+{% endif %}
+{% if nodes['testing'] %}
+    test:
+        image: {{ nodes['name'].text }}
+        working_dir: /home/www
+        volumes:
+            - ../../:/home/www:delegated
+        depends_on:
+            - master.mysql.intra
+        command: composer run test
+
+{% endif %}
+{% if nodes['staticAnalyzer'] %}
+    analyze:
+        image: {{ nodes['name'].text }}
+        working_dir: /home/www
+        volumes:
+            - ../../:/home/www:delegated
+        command: composer run analyze
+
+{% endif %}
+{% endif %}

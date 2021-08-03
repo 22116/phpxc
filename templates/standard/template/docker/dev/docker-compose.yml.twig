@@ -1,5 +1,5 @@
 {% if nodes['type.web.containerization.docker'] %}
-version: '3.4'
+version: '3'
 services:
     app:
         build: .
@@ -7,9 +7,9 @@ services:
             - ../..:/home/app
             - ~/.ssh:/.ssh
 
-{% if nodes['type.web.containerization.docker.storage.mysql'] or nodes['type.web.containerization.docker.storage.mariadb'] %}
-    db:
-        image: {{ nodes['type.web.containerization.docker.storage'].extra['image'] }}
+{% if nodes['type.web.containerization.docker.storage.mysql'] %}
+    mysql:
+        image: {{ nodes['type.web.containerization.docker.storage.mysql'].extra['image'] }}
         command: --default-authentication-plugin=mysql_native_password
         restart: always
         ports:
@@ -18,7 +18,19 @@ services:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: auth
 
-{% if endif %}
+{% endif %}
+{% if nodes['type.web.containerization.docker.storage.mariadb'] %}
+    mariadb:
+        image: {{ nodes['type.web.containerization.docker.storage.mariadb'].extra['image'] }}
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: auth
+
+{% endif %}
 {% if nodes['type.web.containerization.docker.server.nginx'] %}
     nginx:
         image: nginx:stable-alpine

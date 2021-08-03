@@ -1,7 +1,0 @@
-{% if nodes['type.web.containerization.docker'] and (nodes['linter'] or nodes['testing']) %}
-version: '3.8'
-services:
-    php:
-        image: php
-
-{% endif %}

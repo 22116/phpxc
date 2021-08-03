@@ -23,22 +23,21 @@ help:
 	@echo 'Composer targets:'
 	@echo '  composer-install                   Install required composer packages'
 	@echo '  composer-update                    Update required composer packages'
+{% if nodes['linter'] %}
+	@echo ''
+	@echo 'Run linting:'
+	@echo '  lint'
+	@echo '  lint-fix'
+{% endif %}
 {% if nodes['staticAnalyzer'] %}
 	@echo ''
 	@echo 'Run static analysis:'
-{% endif %}
-{% if nodes['staticAnalyzer.phpstan'] %}
-	@echo '  phpstan                            Run analysis with phpstan'
-{% endif %}
-{% if nodes['staticAnalyzer.psalm'] %}
-	@echo '  psalm                              Run analysis with psalm'
+	@echo '  analyze'
 {% endif %}
 {% if nodes['testing'] %}
 	@echo ''
 	@echo 'Run tests:'
-{% endif %}
-{% if nodes['testing.phpunit'] %}
-	@echo '  phpunit                            Run tests with phpunit'
+	@echo '  test                               Run tests'
 {% endif %}
 
 build:
@@ -75,20 +74,15 @@ lint:
 lint-fix:
 	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm lint.fix
 {% endif %}
-{% if nodes['testing.phpunit'] %}
+{% if nodes['testing'] %}
 
-phpunit:
-	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm tests.phpunit
+test:
+	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm test
 {% endif %}
-{% if nodes['staticAnalyzer.phpstan'] %}
+{% if nodes['staticAnalyzer'] %}
 
-phpstan:
-	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm analysis.phpstan
-{% endif %}
-{% if nodes['staticAnalyzer.phpstan'] %}
-
-psalm:
-	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm analysis.psalm
+analyze:
+	docker-compose -p ${DOCKER_PROJECT_NAME} -f ${TEST_COMPOSE_FILE} run --rm analyze
 {% endif %}
 
 # Start environment like an all-in-one command
