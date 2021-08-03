@@ -18,5 +18,5 @@ jobs:
         - name: Run linter
           run: composer run lint
 
-        - name: Run analyze
-          run: composer run analyzer
+        - name: Run analyzer
+          run: composer run analyze
