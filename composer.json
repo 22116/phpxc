@@ -22,13 +22,13 @@
         "twig/twig": "^3.0",
         "jetbrains/phpstorm-attributes": "^1.0",
         "symfony/yaml": "^5.3",
-        "czproject/git-php": "^4.0",
-        "bluetree-service/symfony-console-style": "dev-master"
+        "czproject/git-php": "^4.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "lsbproject/php-clean-code-rules": "^2.0",
-        "phpstan/phpstan": "^0.12.93"
+        "phpstan/phpstan": "^0.12.93",
+        "bluetree-service/symfony-console-style": "dev-master"
     },
     "scripts": {
         "lint": "phpcs",
