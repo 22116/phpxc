@@ -12,6 +12,7 @@
     {%- else %}
     "type": "library",
     {%- endif %}
+
 {% endif %}
 {% if nodes['type.cli'] %}
     "bin": "bin/{{ nodes['type.cli.binaryName'].text }}",
@@ -25,7 +26,7 @@
     "scripts": {
 {% if nodes['linter.phpcs'] %}
         "lint": "phpcs",
-        "lint:fix": "phpcbf",
+        "lint:fix": "phpcbf"{% if nodes['testing'] or nodes['staticAnalyzer'] %},{% endif %}
 {% endif %}
 {% if nodes['testing'] %}
     {%- if nodes['testing.behat'] %}

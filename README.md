@@ -37,6 +37,12 @@ Highly inspired of [TSDX](https://tsdx.io/)
 composer global require lsbproject/phpxc
 ```
 
+or use docker
+
+```shell
+docker run -v "$PWD":/home/phpxc -it 22116/phpxc
+```
+
 ## Usage
 
 There is a main command `create` to build a template. (Also there are several 
