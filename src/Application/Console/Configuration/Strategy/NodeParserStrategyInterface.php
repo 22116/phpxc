@@ -13,9 +13,9 @@ interface NodeParserStrategyInterface
     /**
      * @param array<string, mixed> $node
      *
-     * @return Generator<NodeInterface>
-     *
      * @throws Exception
+     *
+     * @return Generator<NodeInterface>
      */
     public function read(array $node): Generator;
     public function supports(string $type): bool;

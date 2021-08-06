@@ -22,6 +22,8 @@ final class Reader
 
     /**
      * @param mixed[] $configuration
+     *
+     * @throws Exception
      */
     public function read(array $configuration): Configuration
     {

@@ -39,7 +39,7 @@ final class Multiple extends AbstractNodeParser
         foreach ($node[Validator::OPTIONS] as $key => $option) {
             $menuBuilder->addCheckboxItem(
                 $option[Validator::DESCRIPTION],
-                static function () use ($key, &$selected) {
+                static function () use ($key, &$selected): void {
                     if (isset($selected[$key])) {
                         unset($selected[$key]);
                     } else {

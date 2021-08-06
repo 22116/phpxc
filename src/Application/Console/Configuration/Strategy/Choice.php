@@ -41,7 +41,7 @@ final class Choice extends AbstractNodeParser
         foreach ($node[Validator::OPTIONS] as $key => $option) {
             $menuBuilder->addRadioItem(
                 $option[Validator::DESCRIPTION],
-                static function (CliMenu $menu) use ($key, &$selected) {
+                static function (CliMenu $menu) use ($key, &$selected): void {
                     $selected = $key;
 
                     $menu->close();
