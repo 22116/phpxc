@@ -6,7 +6,7 @@ RUN install-php-extensions yaml
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-RUN apk --update --no-cache add coreutils
+RUN apk --update add ncurses
 
 WORKDIR /home/phpxc
 

@@ -11,6 +11,7 @@ FROM php:8.0-cli-alpine
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
+RUN apk --update add ncurses
 RUN install-php-extensions yaml
 
 WORKDIR /home/phpxc
