@@ -46,7 +46,7 @@ docker run -v "$PWD":/home/phpxc -it 22116/phpxc
 ## Usage
 
 There is a main command `create` to build a template. (Also there are several 
-developing helper commands which thi documentation will not cover)
+developing helper commands which this documentation will not cover)
 
 ```shell
 phpxc create <project-path>
