@@ -90,8 +90,8 @@ final class Reader
     {
         return [
             new Strategy\Text($this->input, $this->output),
-            new Strategy\Multiple($this->input, $this->output),
-            new Strategy\Choice($this->input, $this->output),
+            new Strategy\Multiple(),
+            new Strategy\Choice(),
         ];
     }
 }
