@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Application\Console\Configuration;
 
+use Exception;
 use JetBrains\PhpStorm\Pure;
 use LSBProject\PHPXC\Application\Console\Configuration\Strategy;
 use LSBProject\PHPXC\Domain\Configuration;
@@ -35,6 +36,8 @@ final class Reader
 
     /**
      * @param mixed[] $configuration
+     *
+     * @throws Exception
      */
     public function readNodes(array $configuration, string $prefix = ''): NodeCollection
     {

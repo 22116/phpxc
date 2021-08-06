@@ -15,6 +15,7 @@
     "require": {
         "php": "^8",
         "ext-yaml": "*",
+        "ext-posix": "*",
         "symfony/console": "^v5.3",
         "mcstreetguy/composer-parser": "v1.1.0",
         "symfony/dependency-injection": "^5.3",
@@ -23,7 +24,7 @@
         "jetbrains/phpstorm-attributes": "^1.0",
         "symfony/yaml": "^5.3",
         "czproject/git-php": "^4.0",
-        "lsbproject/symfony-console-style": "^1.0"
+        "php-school/cli-menu": "^4.1"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"

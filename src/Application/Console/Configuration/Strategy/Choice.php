@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace LSBProject\PHPXC\Application\Console\Configuration\Strategy;
 
-use BlueConsole\MultiSelect;
 use Generator;
 use JetBrains\PhpStorm\ArrayShape;
 use LSBProject\PHPXC\Application\Console\Configuration\Validator;
-use LSBProject\PHPXC\Application\Console\IOStyle;
 use LSBProject\PHPXC\Domain\Configuration;
+use PhpSchool\CliMenu\Builder\CliMenuBuilder;
+use PhpSchool\CliMenu\CliMenu;
+use PhpSchool\CliMenu\Exception\InvalidTerminalException;
 
-final class Choice extends AbstractChoice
+final class Choice extends AbstractNodeParser
 {
     /**
      * {@inheritdoc}
      *
      * @param mixed[] $node
+     *
+     * @throws InvalidTerminalException
      */
     public function read(
         #[ArrayShape([
@@ -24,18 +27,39 @@ final class Choice extends AbstractChoice
             Validator::OPTIONS => 'array<string, string>',
         ])] array $node
     ): Generator {
-        $choices = $this->buildQuestion($node, 'Choose single option:');
-        $style = new IOStyle($this->input, $this->output);
-        $multiselect = new MultiSelect($style);
-        $selected = $multiselect->renderSingleSelect($choices);
+        $menuBuilder = new CliMenuBuilder();
+        $menuBuilder
+            ->setExitButtonText('Confirm')
+            ->setTitle($node[Validator::DESCRIPTION])
+            ->setForegroundColour('green')
+            ->setBackgroundColour('black')
+            ->disableDefaultItems()
+        ;
 
-        $option = array_values($node[Validator::OPTIONS])[$selected ?: 0];
+        $selected = 0;
+
+        foreach ($node[Validator::OPTIONS] as $key => $option) {
+            $menuBuilder->addRadioItem(
+                $option[Validator::DESCRIPTION],
+                static function (CliMenu $menu) use ($key, &$selected) {
+                    $selected = $key;
+
+                    $menu->close();
+                }
+            );
+        }
+
+        $menuBuilder
+            ->build()
+            ->open();
+
+        $option = $node[Validator::OPTIONS][$selected];
 
         yield new Configuration\Node(
             description: $option[Validator::DESCRIPTION],
             preScripts: $this->readScripts($option[Validator::PRE_SCRIPTS] ?? []),
             postScripts: $this->readScripts($option[Validator::POST_SCRIPTS] ?? []),
-            parentName: (string) array_keys($node[Validator::OPTIONS])[$selected],
+            parentName: $selected,
             extra: $option[Validator::EXTRA] ?? [],
         );
     }

@@ -28,7 +28,6 @@ Highly inspired of [TSDX](https://tsdx.io/)
 
 ## Requirements
 
-* UNIX (as console rendering depends on `stty` tool)
 * PHP 8.0 + yarn extension
 
 ## Installation
@@ -68,5 +67,4 @@ Pass all questions and chill.
   with several templates (cli / web / library / microservice...),
   because of anarchy in the code right now
 * Add more templates
-* Remove `stty` required dependency
 * (Might not be) Consider to make template inheritance
