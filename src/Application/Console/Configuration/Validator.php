@@ -75,11 +75,11 @@ class Validator
             }
 
             if (isset($item[self::PRE_SCRIPTS])) {
-                $this->validateScripts($item, $key, self::PRE_SCRIPTS);
+                $this->validateScripts($item[self::PRE_SCRIPTS], $key, self::PRE_SCRIPTS);
             }
 
             if (isset($item[self::POST_SCRIPTS])) {
-                $this->validateScripts($item, $key, self::POST_SCRIPTS);
+                $this->validateScripts($item[self::POST_SCRIPTS], $key, self::POST_SCRIPTS);
             }
 
             if (in_array($item[self::TYPE], [self::TYPE_CHOICE, self::TYPE_MULTIPLE], true)) {
